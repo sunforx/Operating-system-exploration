@@ -1,4 +1,4 @@
-OSASK‚Ì”¼ŠpƒtƒHƒ“ƒg‚ð—¬—p
+OSASKåŠè§’å­—ä½“è½¬å‘
 
 char 0x00
 ........

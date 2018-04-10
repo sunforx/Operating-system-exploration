@@ -36,16 +36,16 @@ $(APP).bim : $(APP).obj bmp.obj jpeg.obj $(APILIBPATH)apilib.lib Makefile
 
 zbote.img : ../kernel/ipl09.bin ../kernel/zbote.sys $(APP).hrb \
 		Makefile
-	$(EDIMG)   imgin:../../z_tools/fdimg0at.tek \
-		wbinimg src:../kernel/ipl08.bin len:512 from:0 to:0 \
-		copy from:../kernel/zbote.sys to:@: \
+	$(EDIMG)   imgin:../../../z_tools/fdimg0at.tek \
+		wbinimg src:../../kernel/ipl09.bin len:512 from:0 to:0 \
+		copy from:../../kernel/zbote.sys to:@: \
 		copy from:$(APP).hrb to:@: \
-		copy from:../nihongo/nihongo.fnt to:@: \
+		copy from:../../fonts/chinese.fnt to:@: \
 		imgout:zbote.img
 
 # ��ʋK��
 
-%.gas : %.c ../../includes/apilib.h Makefile
+%.gas : %.c ../../libs/apilib.h Makefile
 	$(CC1) -o $*.gas $*.c
 
 %.nas : %.gas Makefile
@@ -64,8 +64,8 @@ zbote.img : ../kernel/ipl09.bin ../kernel/zbote.sys $(APP).hrb \
 
 run :
 	$(MAKE) zbote.img
-	$(COPY) zbote.img ..\..\z_tools\qemu\fdimage0.bin
-	$(MAKE) -C ../../z_tools/qemu
+	$(COPY) zbote.img ..\..\..\z_tools\qemu\fdimage0.bin
+	$(MAKE) -C ../../../z_tools/qemu
 
 full :
 	$(MAKE) -C $(APILIBPATH)

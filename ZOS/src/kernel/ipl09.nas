@@ -1,16 +1,15 @@
 ; zbote-ipl
 ; TAB=4
 
-CYLS	EQU		9				 ; 声明CYLS=9
+CYLS	EQU		9				; 声明CYLS=9
 
-        ORG     0x7c00          ; 指明程序装载地址
+		ORG		0x7c00			; 指明程序装载地址
 
 ; 标准FAT12格式软盘专用的代码 Stand FAT12 format floppy code
 
 		JMP		entry
 		DB		0x90
 		DB		" zbote  "		; 启动扇区名称（8字节）
-		DW		512				; 每个扇区（sector）大小（必须512字节）
 		DW		512				; 每个扇区（sector）大小（必须512字节）
 		DB		1				; 簇（cluster）大小（必须为1个扇区）
 		DW		1				; FAT起始位置（一般为第一个扇区）
@@ -29,7 +28,7 @@ CYLS	EQU		9				 ; 声明CYLS=9
 		DB		"FAT12   "		; 磁盘格式名称（必??8字?，不足填空格）
 		RESB	18				; 先空出18字节
 
-; 程序主体
+; �v���O�����{��
 
 entry:
 		MOV		AX,0			; 初始化寄存器
@@ -37,7 +36,7 @@ entry:
 		MOV		SP,0x7c00
 		MOV		DS,AX
 
-; 读取磁盘
+; �f�B�X�N��ǂ�
 
 		MOV		AX,0x0820
 		MOV		ES,AX
@@ -49,7 +48,7 @@ entry:
 
 ; 读取完毕，跳转到haribote.sys执行！
 
-		MOV		BYTE [0x0ff0],CYLS	; IPL���ǂ��܂œǂ񂾂̂����
+		MOV		BYTE [0x0ff0],CYLS	; 记录IPL实际读取了多少内容    到此结束
 		JMP		0xc200
 
 error:

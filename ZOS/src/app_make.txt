@@ -1,4 +1,4 @@
-﻿TOOLPATH = ../../../z_tools/
+TOOLPATH = ../../../z_tools/
 INCPATH  = ../../includes/
 APILIBPATH   = ../../libs/apilib/
 KernelPATH = ../../kernel/

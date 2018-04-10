@@ -20,13 +20,13 @@ GOLIB    = $(TOOLPATH)golib00.exe
 COPY     = copy
 DEL      = del
 
-# �f�t�H���g����
+#默认动作
 
 default :
 	$(MAKE) ipl09.bin
 	$(MAKE) zbote.sys
 
-# �t�@�C�������K��
+# 镜像文件生成
 
 ipl09.bin : ipl09.nas Makefile
 	$(NASK) ipl09.nas ipl09.bin ipl09.lst
@@ -51,7 +51,7 @@ bootpack.hrb : bootpack.bim Makefile
 zbote.sys : asmhead.bin bootpack.hrb Makefile
 	copy /B asmhead.bin+bootpack.hrb zbote.sys
 
-# ��ʋK��
+# 其他指令
 
 %.gas : %.c bootpack.h Makefile
 	$(CC1) -o $*.gas $*.c
@@ -62,7 +62,7 @@ zbote.sys : asmhead.bin bootpack.hrb Makefile
 %.obj : %.nas Makefile
 	$(NASK) $*.nas $*.obj $*.lst
 
-# �R�}���h
+# 运行程序
 
 clean :
 	-$(DEL) asmhead.bin
