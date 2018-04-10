@@ -1,9 +1,9 @@
-#include "../includes/apilib.h"
+#include "apilib.h"
 #include <stdio.h>		/* sprintf */
 
 #define INVALID		-0x7fffffff
 
-int strtol(char *s, char **endp, int base);	/* �W���֐��istdlib.h�j */
+int strtol(char *s, char **endp, int base);	/* 标准函数 <stdlib.h> */
 
 char *skipspace(char *p);
 int getnum(char **pp, int priority);
@@ -14,7 +14,7 @@ void HariMain(void)
 	char s[30], *p;
 
 	api_cmdline(s, 30);
-	for (p = s; *p > ' '; p++) { }	/* �X�y�[�X������܂œǂݔ�΂� */
+	for (p = s; *p > ' '; p++) { }	/* 一直读到空格为止 */
 	i = getnum(&p, 9);
 	if (i == INVALID) {
 		api_putstr0("error!\n");
@@ -27,7 +27,7 @@ void HariMain(void)
 
 char *skipspace(char *p)
 {
-	for (; *p == ' '; p++) { }	/* �X�y�[�X��ǂݔ�΂� */
+	for (; *p == ' '; p++) { }	/* 将空格跳过去 */
 	return p;
 }
 
@@ -37,7 +37,7 @@ int getnum(char **pp, int priority)
 	int i = INVALID, j;
 	p = skipspace(p);
 
-	/* �P�����Z�q */
+	/*单项运算符*/
 	if (*p == '+') {
 		p = skipspace(p + 1);
 		i = getnum(&p, 0);
@@ -53,7 +53,7 @@ int getnum(char **pp, int priority)
 		if (i != INVALID) {
 			i = ~i;
 		}
-	} else if (*p == '(') {	/* ������ */
+	} else if (*p == '(') { /*括号*/
 		p = skipspace(p + 1);
 		i = getnum(&p, 9);
 		if (*p == ')') {
@@ -61,13 +61,13 @@ int getnum(char **pp, int priority)
 		} else {
 			i = INVALID;
 		}
-	} else if ('0' <= *p && *p <= '9') { /* ���l */
+	} else if ('0' <= *p && *p <= '9') { /*数值*/
 		i = strtol(p, &p, 0);
-	} else { /* �G���[ */
+	} else { /*错误 */
 		i = INVALID;
 	}
 
-	/* �񍀉��Z�q */
+	/*二项运算符*/
 	for (;;) {
 		if (i == INVALID) {
 			break;

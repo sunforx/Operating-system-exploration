@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../includes/apilib.h"
+#include "apilib.h"
 
 #define MAX		1000
 
@@ -12,11 +12,11 @@ void HariMain(void)
 	}
 	for (i = 2; i < MAX; i++) {
 		if (flag[i] == 0) {
-			/* �󂪂��Ă��Ȃ��̂őf�����I */
+			/*没有标记的为质数*/
 			sprintf(s, "%d ", i);
 			api_putstr0(s);
 			for (j = i * 2; j < MAX; j += i) {
-				flag[j] = 1;	/* �{���ɂ͈����� */
+				flag[j] = 1;	/*给它的倍数做上标记*/
 			}
 		}
 	}

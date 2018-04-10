@@ -1,4 +1,4 @@
-#include "../includes/apilib.h"
+#include "apilib.h"
 
 void HariMain(void)
 {
@@ -14,7 +14,7 @@ void HariMain(void)
 	api_refreshwin(win,  6, 26, 154, 90);
 	for (;;) {
 		if (api_getkey(1) == 0x0a) {
-			break; /* Enter�Ȃ�break; */
+			break; /*按下回车键则break; */
 		}
 	}
 	api_closewin(win);

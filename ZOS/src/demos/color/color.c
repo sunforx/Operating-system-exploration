@@ -1,4 +1,4 @@
-#include "../includes/apilib.h"
+#include "apilib.h"
 
 void HariMain(void)
 {
@@ -16,6 +16,6 @@ void HariMain(void)
 		}
 	}
 	api_refreshwin(win, 8, 28, 136, 156);
-	api_getkey(1); /* �Ă��Ƃ��ȃL�[���͂�҂� */
+	api_getkey(1); /*等待按下任意键*/
 	api_end();
 }

@@ -1,5 +1,5 @@
 #include <string.h>		/* strlen */
-#include "../includes/apilib.h"
+#include "apilib.h"
 
 void putstr(int win, char *winbuf, int x, int y, int col, unsigned char *s);
 void wait(int i, int timer, char *keyflag);
@@ -43,6 +43,21 @@ static unsigned char charset[16 * 8] = {
 
 void HariMain(void)
 {
+	/*
+		fx：自机的x坐标（fighter_x）
+		lx,ly：等离子炮弹的坐标（laser_x,laser_y）
+		ix,iy：外星人群的坐标（invaders_x,in-vaders_y）
+		idir：外星人群的移动方向（invaders_direc-tion）
+		laserwait：等离子炮弹的剩余充电时间
+		movewait：当这个变量变为0时外星人群前进一步
+		movewait0：movewait的初始值（消灭30只敌人后减少）
+		invline：外星人群的行数（invaders_line）
+		score：当前得分
+		high：最高得分
+		point：得分的增加量（奖金的单价？）
+		invstr：将外星人群的状态显示为字符串的变量
+	*/
+
 	int win, timer, i, j, fx, laserwait, lx = 0, ly;
 	int ix, iy, movewait0, movewait, idir;
 	int invline, score, high, point;
@@ -81,7 +96,7 @@ next_group:
 	keyflag[1] = 0;
 	keyflag[2] = 0;
 
-	ly = 0; /* ��\�� */
+	ly = 0; /*不显示*/
 	laserwait = 0;
 	movewait = movewait0;
 	idir = +1;
@@ -95,7 +110,7 @@ next_group:
 
 		wait(4, timer, keyflag);
 
-		/* ���@�̏��� */
+		 /*自机的处理*/
 		if (keyflag[0 /* left */]  != 0 && fx > 0) {
 			fx--;
 			putstr(win, winbuf, fx, 13, 6, "efg ");
@@ -112,7 +127,7 @@ next_group:
 			ly = 13;
 		}
 
-		/* �C���x�[�_�ړ� */
+		/*外星人移动*/
 		if (movewait != 0) {
 			movewait--;
 		} else {
@@ -132,7 +147,7 @@ next_group:
 			}
 		}
 
-		/* ���[�U�[���� */
+		/*炮弹处理*/
 		if (ly > 0) {
 			if (ly < 13) {
 				if (ix < lx && lx < ix + 25 && iy <= ly && ly < iy + invline) {
@@ -174,7 +189,7 @@ next_group:
 							}
 						}
 					}
-					/* �S���������ꂽ */
+					/*全部消灭*/
 					movewait0 -= movewait0 / 3;
 					goto next_group;
 	alive:
@@ -200,7 +215,7 @@ void putstr(int win, char *winbuf, int x, int y, int col, unsigned char *s)
 	x = x * 8 + 8;
 	y = y * 16 + 29;
 	x0 = x;
-	i = strlen(s);	/* s�̕������𐔂��� */
+	i = strlen(s);	/*计算s的字符数*/
 	api_boxfilwin(win + 1, x, y, x + i * 8 - 1, y + 15, 0);
 	q = winbuf + y * 336;
 	t[1] = 0;
@@ -241,7 +256,7 @@ void wait(int i, int timer, char *keyflag)
 {
 	int j;
 	if (i > 0) {
-		/* ��莞�ԑ҂� */
+		/*等待一段时间*/
 		api_settimer(timer, i);
 		i = 128;
 	} else {
@@ -266,7 +281,7 @@ void wait(int i, int timer, char *keyflag)
 }
 
 void setdec8(char *s, int i)
-/* i��10�i���\�L��s�Ɋi�[ */
+/*将i用十进制表示并存入s*/
 {
 	int j;
 	for (j = 7; j >= 0; j--) {

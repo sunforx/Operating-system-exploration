@@ -1,8 +1,8 @@
-#include "../includes/apilib.h"
+#include "apilib.h"
 
 #include <stdio.h>
 
-int strtol(char *s, char **endp, int base);	/* �W���֐��istdlib.h�j */
+int strtol(char *s, char **endp, int base);	/* 标准函数 <stdlib.h> */
 
 char *skipspace(char *p);
 void textview(int win, int w, int h, int xskip, char *p, int tab, int lang);
@@ -16,9 +16,9 @@ void HariMain(void)
 	int win, i, j, lang = api_getlang(), xskip = 0;
 	char s[30], *p, *q = 0, *r = 0;
 
-	/* �R�}���h���C����� */
+	/*命令行解析*/
 	api_cmdline(s, 30);
-	for (p = s; *p > ' '; p++) { }	/* �X�y�[�X������܂œǂݔ�΂� */
+	for (p = s; *p > ' '; p++) { }	/*一直读到空格为止*/
 	for (; *p != 0; ) {
 		p = skipspace(p);
 		if (*p == '-') {
@@ -48,12 +48,12 @@ err:
 				api_putstr0(" >tview file [-w30 -h10 -t4]\n");
 				api_end();
 			}
-		} else {	/* �t�@�C�������� */
+		} else {	 /*找到文件名*/
 			if (q != 0) {
 				goto err;
 			}
 			q = p;
-			for (; *p > ' '; p++) { }	/* �X�y�[�X������܂œǂݔ�΂� */
+			for (; *p > ' '; p++) { }	/*一直读到空格为止*/
 			r = p;
 		}
 	}
@@ -61,11 +61,11 @@ err:
 		goto err;
 	}
 
-	/* �E�B���h�E�̏��� */
+	/*准备窗口*/
 	win = api_openwin(winbuf, w * 8 + 16, h * 16 + 37, -1, "tview");
 	api_boxfilwin(win, 6, 27, w * 8 + 9, h * 16 + 30, 7);
 
-	/* �t�@�C���ǂݍ��� */
+	/*载入文件*/
 	*r = 0;
 	i = api_fopen(q);
 	if (i == 0) {
@@ -76,12 +76,12 @@ err:
 	if (j >= 240 * 1024 - 1) {
 		j = 240 * 1024 - 2;
 	}
-	txtbuf[0] = 0x0a; /* �ԕ��p�̉��s�R�[�h */
+	txtbuf[0] = 0x0a; /*卫兵用的换行代码*/
 	api_fread(txtbuf + 1, j, i);
 	api_fclose(i);
 	txtbuf[j + 1] = 0;
 	q = txtbuf + 1;
-	for (p = txtbuf + 1; *p != 0; p++) {	/* ������ȒP�ɂ��邽�߂�0x0d�̃R�[�h����� */
+	for (p = txtbuf + 1; *p != 0; p++) {	/*为了让处理变得简单，删掉0x0d的代码*/
 		if (*p != 0x0d) {
 			*q = *p;
 			q++;
@@ -89,7 +89,7 @@ err:
 	}
 	*q = 0;
 
-	/* ���C�� */
+	/*主体*/
 	p = txtbuf + 1;
 	for (;;) {
 		textview(win, w, h, xskip, p, t, lang);
@@ -115,7 +115,7 @@ err:
 				if (xskip < 0) {
 					xskip = 0;
 				}
-				if (api_getkey(0) != '4') { /* ��'4'����Ă��Ȃ���΁A�����I��� */
+				if (api_getkey(0) != '4') { /*如果没有按下“4”则处理结束*/
 					break;
 				}
 			}
@@ -134,7 +134,7 @@ err:
 					if (p == txtbuf + 1) {
 						break;
 					}
-					for (p--; p[-1] != 0x0a; p--) { } /* �ꕶ���O��0x0a���ł�܂ł����̂ڂ� */
+					for (p--; p[-1] != 0x0a; p--) { } /*回溯到上一个字符为0x0a为止*/
 				}
 				if (api_getkey(0) != '8') {
 					break;
@@ -160,7 +160,7 @@ err:
 
 char *skipspace(char *p)
 {
-	for (; *p == ' '; p++) { }	/* �X�y�[�X��ǂݔ�΂� */
+	for (; *p == ' '; p++) { }	/*跳过空格*/
 	return p;
 }
 
@@ -203,7 +203,7 @@ char *lineview(int win, int w, int y, int xskip, unsigned char *p, int tab, int 
 				x = puttab(x, w, xskip, s, tab);
 				p++;
 			} else if ((0x81 <= *p && *p <= 0x9f) || (0xe0 <= *p && *p <= 0xfc)) {
-				/* �S�p���� */
+				/*全角字符*/
 				if (x == -1) {
 					s[0] = ' ';
 				}
@@ -229,7 +229,7 @@ char *lineview(int win, int w, int y, int xskip, unsigned char *p, int tab, int 
 				x = puttab(x, w, xskip, s, tab);
 				p++;
 			} else if (0xa1 <= *p && *p <= 0xfe) {
-				/* �S�p���� */
+				/*全角字符*/
 				if (x == -1) {
 					s[0] = ' ';
 				}

@@ -1,4 +1,4 @@
-#include "../includes/apilib.h"
+#include "apilib.h"
 
 unsigned char rgb2pal(int r, int g, int b, int x, int y);
 
@@ -23,13 +23,13 @@ unsigned char rgb2pal(int r, int g, int b, int x, int y)
 {
 	static int table[4] = { 3, 1, 0, 2 };
 	int i;
-	x &= 1; /* ������ */
+	x &= 1; /*判断是偶数还是奇数*/
 	y &= 1;
-	i = table[x + y * 2];	/* ���ԐF���邽�߂̒萔 */
-	r = (r * 21) / 256;	/* ����� 0�`20 �ɂȂ� */
+	i = table[x + y * 2]; /*用来生成中间色的常量*/
+	r = (r * 21) / 256; /* r为0～20*/
 	g = (g * 21) / 256;
 	b = (b * 21) / 256;
-	r = (r + i) / 4;	/* ����� 0�`5 �ɂȂ� */
+	r = (r + i) / 4; /* r为0～5*/
 	g = (g + i) / 4;
 	b = (b + i) / 4;
 	return 16 + r + g * 6 + b * 36;

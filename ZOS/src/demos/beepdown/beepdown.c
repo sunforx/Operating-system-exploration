@@ -1,4 +1,4 @@
-#include "../includes/apilib.h"
+#include "apilib.h"
 
 void HariMain(void)
 {
@@ -6,10 +6,10 @@ void HariMain(void)
 	timer = api_alloctimer();
 	api_inittimer(timer, 128);
 	for (i = 20000000; i >= 20000; i -= i / 100) {
-		/* 20KHz�`20Hz : �l�Ԃɕ������鉹�͈̔� */
-		/* i��1%�����炳��Ă��� */
+		/* 20KHz～20Hz，即人类可以听到的声音范围*/
+		/* i以1%的速度递减*/
 		api_beep(i);
-		api_settimer(timer, 1);		/* 0.01�b */
+		api_settimer(timer, 1); /* 0.01秒*/
 		if (api_getkey(1) != 128) {
 			break;
 		}
