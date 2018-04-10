@@ -1,0 +1,138 @@
+\documentclass{swfcthesis}
+
+\addbibresource{thesis.bib}    % 参照教程自己去写一个.bib文件
+
+\begin{document}
+
+\Title{操作系统探索}
+\Author{尹志成}
+\Advisor{王晓林}
+\AdvisorTitle{讲师}
+\AdvisorInfo{王晓林，男，49 岁，硕士，讲师，毕业于英国格林尼治大学，分布式计算系统专业。现任西南林业大学计信学院教师。执教 Linux、操作系统、网络技术等方面的课程，有丰富的 Linux 教学和系统管理经验。}
+\Month{六}
+\Year{二〇一八}
+\Subject{计算机科学与技术专业}    %专业名称（比如 计算机科学与技术专业）
+\Abstract{这里写论文摘要（约两百字）}
+\Keywords{操作系统}
+\Acknowledgments{这里写鸣谢（约百余字）}
+\enTitle{Operating system exploration}
+\enAuthor{Zach Yin}
+\enAbstract{英文摘要}
+\enKeywords{Operate System}
+
+%%% 下面六行不要动！
+\makepreliminarypages% 封面
+\frontmatter          
+\tableofcontents     % 目录
+\listoffigures       % 插图目录
+\listoftables        % 表格目录
+\mainmatter
+\chapter{绪论}
+在数字时代，操作系统的重要性不言而喻，它作为计算机软硬件之间的桥梁，存在于日常生活的每一个角落，而研究一个只有庞大的公司聚集成百上千的高级工程师才能完成的操作系统对于学生而言是一个几乎不可能完成的挑战，但是克服难关是锻炼技术的必经之路\cite{30_os}，所以研究并完成一个基本满足日常功能需求的操作系统作为此次的目标，并以此为跳板对操作系统进行更深一步的探究。
+\chapter{思路}
+此次的思路由四部分组成：
+1、空白操作系统的启动
+2、丰富操作系统内容
+3、实现对外兼容及保护
+4、操作系统探究
+\section{空白操作系统的启动}
+利用汇编语言及相关操作系统知识探究操作系统如何从硬件的0和1向到软件代码的衔接
+\section{丰富操作系统内容}
+从内存管理，输入输出，多进程，时钟四个模块丰富操作系统的内容
+\section{实现对外兼容及保护}
+从接口设计及安全的角度完善操作系统
+\section{操作系统探究}
+
+\chapter{空白操作系统的启动}
+\section{操作系统启动流程}
+按下电源键之后启动计算机，启动过程分为四个阶段\cite{hbt}：
+	\begin{center}BIOS -> MBR -> VBR -> 操作系统\end{center}
+	
+	1、在BIOS完成POST（硬件自检，Power-On Self Test）并选择启动顺序（Boot Sequence）把控制权转交给排在第一位的储存设备
+	
+	2、计算机读取该设备的MBR（第一个扇区，最前面的512个字节），在此装入ZOS的启动程序IPL（Initial Program Loader）程序ipl09.nas
+	
+	\hspace*{1cm}ipl09.nas指明了操作系统ZOS的位置，主分区第一个扇区的物理位置（柱面、磁头、扇区号等等）
+
+	3、计算机根据VBR（Volume boot record）指引得到操作系统在这个分区里的位置继而加载操作系统
+	
+	4、控制权转交给操作系统后，操作系统ZOS的Kernel被载入内存
+\section{制作MBR(ipl09.nas)}
+\begin{minted}{c++}
+
+\end{minted}
+\section{制作空白操作系统}
+
+\section{丰富操作系统内容}
+从内存管理，输入输出，多进程，时钟四个模块丰富操作系统的内容
+\section{实现对外兼容及保护}
+从接口设计及安全的角度完善操作系统
+\section{操作系统探究}
+
+\chapter{另一章}
+
+\section{图片与表格}
+
+如果需要插入图片与表格的话，可以参考下面的简单例子。
+
+\subsection{图片示例}
+
+下面是插入图片的示例：
+
+\begin{figure}[!ht]
+  \centering
+  %\includegraphics[width=.5\textwidth]{hello}
+  \caption{图片示例}
+  \label{fig:hello}
+\end{figure}
+
+\subsection{表格示例}
+
+下面是一个表格的例子：
+
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|r|c|l|}    \hline
+    Hello&world&Hello, world!\\hline
+    Hello&world&Hello, world!\\hline
+  \end{tabular}
+  \caption{表格示例}
+  %\label{tab:hello}
+\end{table}
+
+\chapter{又一章标题}
+
+接着写吧接着写吧接着写吧接着写吧
+
+%%% 正文部分到此结束。下面是『参考文献』、『指导教师简介』、『鸣谢』、『附录』
+
+%% 不要动下面四行！
+\Appendix{}
+\printbibliography[heading={bibintoc},title={参考文献}] % 输出参考文献
+\advisorinfopage{}                 % 输出指导教师简介
+\acknowledgmentspage{}             % 输出鸣谢
+
+%%% 下面是附录部分，可以没有。
+
+\chapter{我也不知道为什么要写附录} %附录一
+
+可以参考模版目录中的 appendix.tex 文件来写。
+
+\chapter{主要程序代码} %附录二
+
+% 插入程序代码
+%\inputminted[fontsize=\small]{c}{hello.c}
+
+% 也可以这样
+\begin{listing}[H]
+  %\inputminted{c}{hello.c}
+  %\caption{Hello, world!}
+  %\label{lst:hello}
+\end{listing}  
+
+\end{document} % 结束。不要动下面几行！
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
