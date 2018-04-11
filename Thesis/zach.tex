@@ -12,9 +12,9 @@
 \Month{六}
 \Year{二〇一八}
 \Subject{计算机科学与技术专业}    %专业名称（比如 计算机科学与技术专业）
-\Abstract{这里写论文摘要（约两百字）}
+\Abstract{操作系统最初的诞生是为了搭配进行简单繁重的数字运算机，但随着时代的演进，计算机不仅作为处理各种运算的机器，其附加价值也越来越被人们看重，跟随着计算机的发展，操作系统的使命也在一代代的改变，（约两百字）}
 \Keywords{操作系统}
-\Acknowledgments{这里写鸣谢（约百余字）}
+\Acknowledgments{感谢，}
 \enTitle{Operating system exploration}
 \enAuthor{Zach Yin}
 \enAbstract{英文摘要}
@@ -27,47 +27,134 @@
 \listoffigures       % 插图目录
 \listoftables        % 表格目录
 \mainmatter
+
 \chapter{绪论}
 在数字时代，操作系统的重要性不言而喻，它作为计算机软硬件之间的桥梁，存在于日常生活的每一个角落，而研究一个只有庞大的公司聚集成百上千的高级工程师才能完成的操作系统对于学生而言是一个几乎不可能完成的挑战，但是克服难关是锻炼技术的必经之路\cite{30_os}，所以研究并完成一个基本满足日常功能需求的操作系统作为此次的目标，并以此为跳板对操作系统进行更深一步的探究。
 \chapter{思路}
-此次的思路由四部分组成：
-1、空白操作系统的启动
-2、丰富操作系统内容
-3、实现对外兼容及保护
-4、操作系统探究
-\section{空白操作系统的启动}
-利用汇编语言及相关操作系统知识探究操作系统如何从硬件的0和1向到软件代码的衔接
-\section{丰富操作系统内容}
-从内存管理，输入输出，多进程，时钟四个模块丰富操作系统的内容
-\section{实现对外兼容及保护}
-从接口设计及安全的角度完善操作系统
-\section{操作系统探究}
+	此次的思路由四部分组成：
+	1、操作系统探究
+	2、空白操作系统的启动
+	3、编写操作系统内核
+	4、实现对外兼容及安全防护
+	
+	\section{操作系统探究}
+	从历史上计算机操作系统的发展联系到人们的日常生活，寻求符合操作系统发展且适应用户使用的特征要素。
+	
+	\section{空白操作系统的启动}
+	利用汇编语言及操作系统相关知识探究操作系统如何从电气设备到软件代码的衔接
+	
+	\section{丰富操作系统内容}
+	从内存管理，输入输出，多进程，分时四个模块丰富操作系统的内容
+	
+	\section{实现对外接口及安全防护}
+	从接口设计及安全防护的角度完善操作系统
+	
+\chapter{操作系统探索}
 
 \chapter{空白操作系统的启动}
-\section{操作系统启动流程}
-按下电源键之后启动计算机，启动过程分为四个阶段\cite{hbt}：
-	\begin{center}BIOS -> MBR -> VBR -> 操作系统\end{center}
-	
-	1、在BIOS完成POST（硬件自检，Power-On Self Test）并选择启动顺序（Boot Sequence）把控制权转交给排在第一位的储存设备
-	
-	2、计算机读取该设备的MBR（第一个扇区，最前面的512个字节），在此装入ZOS的启动程序IPL（Initial Program Loader）程序ipl09.nas
-	
-	\hspace*{1cm}ipl09.nas指明了操作系统ZOS的位置，主分区第一个扇区的物理位置（柱面、磁头、扇区号等等）
 
-	3、计算机根据VBR（Volume boot record）指引得到操作系统在这个分区里的位置继而加载操作系统
+	\section{操作系统启动流程}
+	按下电源键之后启动计算机，启动过程分为四个阶段\cite{hbt}：
+		\begin{center}BIOS -> MBR -> VBR -> 操作系统\end{center}
+		
+		1、在BIOS完成POST（硬件自检，Power-On Self Test）并选择启动顺序（Boot Sequence）把控制权转交给排在第一位的储存设备
+		
+		2、计算机读取该设备的MBR（第一个扇区，最前面的512个字节），在此装入ZOS的启动程序IPL（Initial Program Loader）程序ipl09.nas
+		
+		\hspace*{1cm}ipl09.nas指明了操作系统的位置，主分区第一个扇区的物理位置（柱面、磁头、扇区号等等）
+
+		3、计算机根据VBR（Volume boot record）指引得到操作系统在这个分区里的位置继而加载操作系统
+		
+		4、控制权转交给操作系统后，操作系统的Kernel被载入内存
+		
+	\section{制作MBR（ipl09.nas）}
+		MBR负责指出操作系统的位置，主分区第一个扇区的物理位置（柱面、磁头、扇区号等等）
+		\begin{minted}{c}
+			ORG		0x7c00			; 指明程序装载地址
+		\end{minted}
+		\begin{minted}{c}
+			DB		" zbote  "		; 启动扇区名称（8字节）
+			DW		512				; 每个扇区（sector）大小（必须512字节）
+			DB		1				; 簇（cluster）大小（必须为1个扇区）
+			DW		1				; FAT起始位置（一般为第一个扇区）
+			DB		2				; FAT个数（必须为2）
+			DW		224				; 根目录大小（一般为224项）
+			DW		2880			; 该磁盘大小（必须为2880扇区1440*1024/512）
+			DB		0xf0			; 磁盘类型（必须为0xf0）
+			DW		9				; FAT的长度（必须是9扇区）
+			DW		18				; 一个磁道（track）有几个扇区（必须为18）
+			DW		2				; 磁头数（必须是2）
+			DD		0				; 不使用分区，必须是0
+			DD		2880			; 重写一次磁盘大小
+			DB		0,0,0x29		; 意义不明（固定）
+			DD		0xffffffff		; （可能是）卷标号码
+			DB		"    ZOS    "		; 磁盘的名称（必须为11字符，不足填空格）
+			DB		"FAT12   "		; 磁盘格式名称（必须是8字符，不足填空格）
+			RESB	18				; 先空出18字节
+		\end{minted}
+		\begin{minted}{c}
+			MOV		CH,0			; 柱面0
+			MOV		DH,0			; 磁头0
+			MOV		CL,2			; 扇区2
+		\end{minted}
+		\begin{minted}{c}
+			
+			readfast:	; 使用AL尽量一次性读取数据 从此开始
+			; ES:读取地址, CH:柱面, DH:磁头, CL:扇区, BX:读取扇区数
+
+					MOV		AX,ES			; < 通过ES计算AL的最大值 >
+					SHL		AX,3			; 将AX除以32，将结果存入AH（SHL是左移位指令）
+					AND		AH,0x7f			; AH是AH除以128所得的余数（512*128=64K）
+					MOV		AL,128			; AL = 128 - AH; AH是AH除以128所得的余数（512*128=64K）
+					SUB		AL,AH
+
+					MOV		AH,BL			; < 通过BX计算AL的最大值并存入AH >
+					CMP		BH,0			; if (BH != 0) { AH = 18; }
+					JE		.skip1
+					MOV		AH,18
+			next:
+					POP		AX
+					POP		CX
+					POP		DX
+					POP		BX				; 将ES的内容存入BX
+					SHR		BX,5			; 将BX由16字节为单位转换为512字节为单位
+					MOV		AH,0
+					ADD		BX,AX			; BX += AL;
+					SHL		BX,5			; 将BX由512字节为单位转换为16字节为单位
+					MOV		ES,BX			; 相当于EX += AL * 0x20;
+					POP		BX
+					SUB		BX,AX
+					JZ		.ret
+					ADD		CL,AL			; 将CL加上AL
+					CMP		CL,18			; 将CL与18比较
+					JBE		readfast		; CL <= 18则跳转至readfast
+					MOV		CL,1
+					ADD		DH,1
+					CMP		DH,2
+					JB		readfast		; DH < 2则跳转至readfast
+					MOV		DH,0
+					ADD		CH,1
+					JMP		readfast
+		\end{minted}
 	
-	4、控制权转交给操作系统后，操作系统ZOS的Kernel被载入内存
-\section{制作MBR(ipl09.nas)}
-\begin{minted}{c++}
+	\section{制作空白操作系统}
+	首个操作系统为测试操作，目的是测试MBR可以成功启动操作系统
+	\begin{minted}{assembler}
+			fin:
+			    HLT
+			    JMP fin
+	\end{minted}
+		
+\chapter{编写操作系统内核}
+从内存管理，输入输出，多进程，分时四个模块丰富操作系统的内容
+	\section{内存管理}
+	\section{输入输出}
+	\section{多进程}
+	\section{分时}
+	
+\chapter{实现对外兼容及安全防护}
+从接口设计及安全防护的角度完善操作系统
 
-\end{minted}
-\section{制作空白操作系统}
-
-\section{丰富操作系统内容}
-从内存管理，输入输出，多进程，时钟四个模块丰富操作系统的内容
-\section{实现对外兼容及保护}
-从接口设计及安全的角度完善操作系统
-\section{操作系统探究}
 
 \chapter{另一章}
 
