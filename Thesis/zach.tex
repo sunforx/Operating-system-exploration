@@ -121,16 +121,23 @@
 		linenos=true]{c}{../ZOS/src/kernel/memory.c}
 		\end{listing}
 
-		memory
 		\subsection{内存释放}
 		为保证磁盘空闲空间尽可能不呈现碎片化，内存释放主要分为三种情况：
 		\begin{description}
 			\item[前端可用:]释放内存的相连前端是空闲内存或释放内存相连两端都是空闲内存
 			\item[后端可用:]释放内存的相连后端是空闲空间
-			\item[前端后端均不可用:]挪动空闲空间以
+			\item[前端后端均不可用:]挪动空闲空间以合并
 		\end{description}
 
 		前端可用：
+					
+		\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=.5\textwidth]{fig/mem.pdf}
+		\caption{图片示例}
+		\label{fig:hello}
+		\end{figure}
+		实现如下：
 		\begin{listing}[H]
 		\inputminted[tabsize=2, firstline=97, lastline=117,
 		linenos=true]{c}{../ZOS/src/kernel/memory.c}
@@ -148,9 +155,20 @@
 		linenos=true]{c}{../ZOS/src/kernel/memory.c}
 		\end{listing}
 
-	\section{输入输出}
-	\section{多进程}
-	\section{分时}
+    \section{输入输出}
+		输入作为人与计算机之间最基本的交互方式，在现在键盘和鼠标作为标准输入设备。
+		
+		
+                
+	\section{多道程序系统}
+		现代的计算机已经不仅仅作为数字计算的工具，而进入大众生活的计算机被赋予了更多的生活需求，用户可能在看电影的同时查看电子邮件，也有可能在写论文的时候进入浏览器查询相关资料，但是更重要的是计算机往往在用户不经意间打开防病毒软件等保证用户计算机的安全\cite{tanenbaum2009modern}。
+		由此可见多进程的工作方式在计算机工作中同样不可或缺。
+
+		但是在实际的处理过程中，计算机并不能同时处理多个程序，所以必须采用分时的设计，关于分时操作系统的设计在下一节。在此有两个概念，同时处理和多个程序，同时处理属于分时，多道程序属于多道程序设计。
+
+		首先要处理的问题是如何在运行多个程序，。
+	\section{分时操作系统}
+		在上一节中说到分时是使得在用户看来计算机的多道程序同时运行，多道程序已经实现了，分时简单说是使得CPU在用户不能明显感觉到的时间间隔内切换运行多个程序，在切换的过程中...
 	
 \chapter{实现对外兼容及安全防护}
 从接口设计及安全防护的角度完善操作系统
