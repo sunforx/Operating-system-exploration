@@ -88,7 +88,7 @@
 
 	\section{制作空白操作系统}
 	首个操作系统为测试操作，目的是测试MBR可以成功启动操作系统
-	\begin{minted}{c}
+	\begin{minted}{nasm}
 			fin:
 			    HLT
 			    JMP fin
@@ -106,10 +106,10 @@
 		linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
 		
 		\begin{description}
-		\item[frees:]可用信息数目
-		\item[maxfrees:]用于观察可用状况：frees的最大值
-		\item[lostsize:]释放失败的内存的大小总和
-		\item[losts:]释放失败次数
+			\item[frees:]可用信息数目
+			\item[maxfrees:]用于观察可用状况：frees的最大值
+			\item[lostsize:]释放失败的内存的大小总和
+			\item[losts:]释放失败次数
 		\end{description}
 		
 		经过内存初始化和释放所有内存空间后，内存管理正常运行。
@@ -117,10 +117,10 @@
 		\subsection{内存分配}
 
 		\begin{listing}[H]
-		\inputminted[tabsize=2, firstline=68, lastline=80,
-		linenos=true]{c}{../ZOS/src/kernel/memory.c}
+			\inputminted[tabsize=2, firstline=68, lastline=80,
+			linenos=true]{c}{../ZOS/src/kernel/memory.c}
 		\end{listing}
-
+		
 		\subsection{内存释放}
 		为保证磁盘空闲空间尽可能不呈现碎片化，内存释放主要分为三种情况：
 		\begin{description}
@@ -129,23 +129,25 @@
 			\item[前端后端均不可用:]挪动空闲空间以合并
 		\end{description}
 
-		前端空闲：	
-		\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=.1\textwidth]{fig/mem.pdf}
-		\caption{前端空闲}
-		\label{fig:hello}
+		已知：待释放的空间的开始地址和空间大小
+		
+		\newpage
+		前端空闲如图\ref{fig:mem0}和图\ref{fig:mem1}所示\\
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=.8\textwidth]{fig/mem0.pdf}
+			\caption{前端空闲}
+			\label{fig:mem0}
 		\end{figure}
-		或
-		\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=.1\textwidth]{fig/mem.pdf}
-		\caption{前端可用，且后端空闲}
-		\label{fig:hello}
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=.8\textwidth]{fig/mem1.pdf}
+			\caption{前端可用，且后端空闲}
+			\label{fig:mem1}
 		\end{figure}
-		实现如下：
+		\\实现如下：
 		\begin{listing}[H]
-		\inputminted[tabsize=2, firstline=97, lastline=117,
+		\inputminted[tabsize=2, firstline=98, lastline=116,
 		linenos=true]{c}{../ZOS/src/kernel/memory.c}
 		\end{listing}
 
