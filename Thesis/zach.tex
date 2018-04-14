@@ -124,17 +124,23 @@
 		\subsection{内存释放}
 		为保证磁盘空闲空间尽可能不呈现碎片化，内存释放主要分为三种情况：
 		\begin{description}
-			\item[前端可用:]释放内存的相连前端是空闲内存或释放内存相连两端都是空闲内存
+			\item[前端空闲:]释放内存的相连前端是空闲内存或释放内存相连两端都是空闲内存
 			\item[后端可用:]释放内存的相连后端是空闲空间
 			\item[前端后端均不可用:]挪动空闲空间以合并
 		\end{description}
 
-		前端可用：
-					
+		前端空闲：	
 		\begin{figure}[!ht]
 		\centering
-		\includegraphics[width=.5\textwidth]{fig/mem.pdf}
-		\caption{图片示例}
+		\includegraphics[width=.1\textwidth]{fig/mem.pdf}
+		\caption{前端空闲}
+		\label{fig:hello}
+		\end{figure}
+		或
+		\begin{figure}[!ht]
+		\centering
+		\includegraphics[width=.1\textwidth]{fig/mem.pdf}
+		\caption{前端可用，且后端空闲}
 		\label{fig:hello}
 		\end{figure}
 		实现如下：
@@ -143,21 +149,24 @@
 		linenos=true]{c}{../ZOS/src/kernel/memory.c}
 		\end{listing}
 
-		后端可用：
+		后端空闲：
 		\begin{listing}[H]
 		\inputminted[tabsize=2, firstline=118, lastline=127,
 		linenos=true]{c}{../ZOS/src/kernel/memory.c}
 		\end{listing}
 
-		前端后端均不可用
+		前端后端均被占用
 		\begin{listing}[H]
 		\inputminted[tabsize=2, firstline=128, lastline=141,
 		linenos=true]{c}{../ZOS/src/kernel/memory.c}
 		\end{listing}
 
     \section{输入输出}
-		输入作为人与计算机之间最基本的交互方式，在现在键盘和鼠标作为标准输入设备。
-		
+	
+		输入作为人与计算机之间最基本的交互方式，其中键盘和鼠标作为标准输入设备。
+		\subsection{键盘输入}
+		\subsection{鼠标输入}
+		\subsection{标准输出}
 		
                 
 	\section{多道程序系统}
