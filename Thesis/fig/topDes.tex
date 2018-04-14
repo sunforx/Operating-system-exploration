@@ -1,0 +1,41 @@
+\input{printable}
+
+\begin{document}
+\begin{tikzpicture} [node distance=1cm, thick]
+  \node (APP1) [oval] {APP1};
+  \node (APP2) [oval, right=of APP1] {APP2};
+  \node (APP3) [oval, right=of APP2] {APP3};
+  \node (API) [process, below=of APP2, minimum width=7.5cm] {API}; 
+  \node (kernel) [startstop, below=of API, minimum width=7.5cm] {RongOS Kernel};
+  \node (hardware) [process, below=of kernel, minimum width=7.5cm] {Hardware};
+  \node (B) [below right=of hardware, xshift=-1cm, yshift=0.8cm]{B};
+  \node (A) [left=of B] {A};
+  \node (C) [below=of A, yshift=1cm] {A};
+  \node (D) [below=of B, yshift=1cm] {B};
+  
+
+  \draw[arrow] ($(APP1.south) + (-1em, 0.2em)$) -- ($(API.north) +
+  (-8.55em, 0)$);
+  \draw[dotArrow] ($(API.north) + (-6.55em, 0)$) -- ($(APP1.south) + (1em, .2em)$);
+  \draw[arrow] ($(APP2.south) + (-1em, 0.2em)$) -- ($(API.north) + (-1em,
+  0em)$);
+  \draw[dotArrow] ($(API.north) + (1em, 0em)$) -- ($(APP2.south) + (1em, 0.2em)$);
+  \draw[arrow] ($(APP3.south) + (-1em, 0.2em)$) -- ($(API.north) + (6.55em, 0em)$);
+  \draw[dotArrow]($(API.north) + (8.55em, 0em)$) -- ($(APP3.south) + (1em, 0.2em)$);
+  \draw[arrow] ($(API.south) + (-1em, 0)$) -- ($(kernel.north) + (-1em, 0)$);
+  \draw[dotArrow] ($(kernel.north) + (1em, 0em)$) -- ($(API.south) + (1em, 0em)$);
+  \draw[arrow] ($(kernel.south) + (-1em, 0em)$) -- ($(hardware.north) + (-1em, 0em)$);
+  \draw[dotArrow] ($(hardware.north) + (1em, 0em)$) -- ($(kernel.south) + (1em, 0)$);
+  \draw[arrow] (A) -- node[below]{Call}(B);
+  \draw[dotArrow] (C) -- node[below]{Service}(D);
+\end{tikzpicture}
+
+
+\end{document}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:}})}])])}])]))))))]))))))]))))))]))))))]))))))]))))))]))))))]))))))]))))))]))))))]}])}])}])}])}])}])}])}])}])}])]}}}
