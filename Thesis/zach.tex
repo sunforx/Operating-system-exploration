@@ -30,12 +30,14 @@
 
 \chapter{绪论}
 在数字时代，操作系统的重要性不言而喻，它作为计算机软硬件之间的桥梁，存在于日常生活的每一个角落，而研究一个只有庞大的公司聚集成百上千的高级工程师才能完成的操作系统对于学生而言是一个几乎不可能完成的挑战，但是克服难关是锻炼技术的必经之路\cite{30_os}，所以研究并完成一个基本满足日常功能需求的操作系统作为此次的目标，并以此为跳板对操作系统进行更深一步的探究。
+
 \chapter{思路}
-	此次的思路由四部分组成：
-	1、操作系统探究
-	2、空白操作系统的启动
-	3、编写操作系统内核
-	4、实现对外兼容及安全防护
+
+	此次的思路由四部分组成：\\
+	\hspace*{1cm}1、操作系统探究 \\
+	\hspace*{1cm}2、空白操作系统的启动 \\
+	\hspace*{1cm}3、编写操作系统内核 \\
+	\hspace*{1cm}4、实现对外兼容及安全防护
 	
 	\section{操作系统探究}
 	从历史上计算机操作系统的发展联系到人们的日常生活，寻求符合操作系统发展且适应用户使用的特征要素。
@@ -51,10 +53,40 @@
 	
 \chapter{操作系统探索}
 
+	\section{操作系统的诞生}
+
+		\subsection{第一代}
+
+		操作系统最初出现的场景是一个工程师小组设计、建造一台机器，之后使用机器语言编写程序并通过将上千根电缆接到插线板上连接成电路，
+		控制机器的基本功能，进而操作机器运算诸如制作正弦、余弦、对数表或计算炮弹弹道的简单数学运算。
+
+		这里的机器语言就充当着操作系统的角色——操作硬件得到想要的结果。
+
+		\subsection{第二代}
+
+		在晶体管发明后，计算机可靠程度大大增加，计算机生产厂商成批生产
+
+		改进后的操作系统的载体是穿孔纸带，将事先设计好的程序按照流程在纸带上打孔，通过读入控制计算机。
+
+		批处理
+
+		\subsection{第三代}
+
+		\subsection{第四代}
+
+		\subsection{第五代}
+
+	\section{操作系统的规范化}
+
+	\section{操作系统启动流程}
+
+
 \chapter{空白操作系统的启动}
 
 	\section{操作系统启动流程}
+
 	按下电源键之后启动计算机，启动过程分为四个阶段\cite{hbt}：
+
 		\begin{center}BIOS -> MBR -> VBR -> 操作系统\end{center}
 		
 		1、在BIOS完成POST（硬件自检，Power-On Self Test）并选择启动顺序（Boot Sequence）把控制权转交给排在第一位的储存设备
@@ -68,12 +100,15 @@
 		4、控制权转交给操作系统后，操作系统的Kernel被载入内存
 		
 	\section{制作MBR（ipl09.nas）}
+
 		MBR负责指出操作系统的位置，主分区第一个扇区的物理位置（柱面、磁头、扇区号等等）
+
+		\begin{listing}[H]
 		\inputminted[tabsize=2, firstline=6, lastline=6,
 		linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
-		
 		\inputminted[tabsize=2, firstline=12, lastline=29,
 		linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
+		\end{listing}
 		
 		\inputminted[tabsize=2, firstline=43, lastline=45,
 		linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
@@ -87,7 +122,9 @@
 	\end{listing}
 
 	\section{制作空白操作系统}
+
 	首个操作系统为测试操作，目的是测试MBR可以成功启动操作系统
+
 	\begin{minted}{nasm}
 			fin:
 			    HLT
@@ -95,13 +132,17 @@
 	\end{minted}
 		
 \chapter{编写操作系统内核}
+
 	从内存管理，输入输出，多进程，分时四个模块丰富操作系统的内容
+
 	\section{内存管理}
+
 		内存 (RAM) 是计算机中不可或缺的重要硬件，所有程序的运行都是在内存中进行的，而CPU访问硬盘数据也必须先经过内存交换才得以实现，内存在加速CPU访问硬盘居功至伟。
 		由内存的重要性可知内存管理在操作系统中也非常重要。	
 		
 		内存管理设计的主要目的是快速并且高效的分配内存空间，并在适当的时间释放并回收内存空间。
 		根据内存管理的设计目的，内存管理的数据结构如下:
+
 		\inputminted[tabsize=2, firstline=137, lastline=143,
 		linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
 		
@@ -122,7 +163,9 @@
 		\end{listing}
 		
 		\subsection{内存释放}
+
 		为保证磁盘空闲空间尽可能不呈现碎片化，内存释放主要分为三种情况：
+
 		\begin{description}
 			\item[前端空闲:]释放内存的相连前端是空闲内存或释放内存相连两端都是空闲内存
 			\item[后端可用:]释放内存的相连后端是空闲空间
@@ -132,32 +175,57 @@
 		已知：待释放的空间的开始地址和空间大小
 		
 		\newpage
-		前端空闲如图\ref{fig:mem0}和图\ref{fig:mem1}所示\\
+
+		前端空闲如图\ref{fig:mem0}和图\ref{fig:mem1}所示: 
+
 		\begin{figure}[h]
 			\centering
 			\includegraphics[width=.8\textwidth]{fig/mem0.pdf}
 			\caption{前端空闲}
 			\label{fig:mem0}
 		\end{figure}
+
 		\begin{figure}[h]
 			\centering
 			\includegraphics[width=.8\textwidth]{fig/mem1.pdf}
 			\caption{前端可用，且后端空闲}
 			\label{fig:mem1}
 		\end{figure}
-		\\实现如下：
+
+		实现如下：
+
 		\begin{listing}[H]
 		\inputminted[tabsize=2, firstline=98, lastline=116,
 		linenos=true]{c}{../ZOS/src/kernel/memory.c}
 		\end{listing}
 
-		后端空闲：
+		后端空闲:
+
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=.8\textwidth]{fig/mem2.pdf}
+			\caption{后端空闲}
+			\label{fig:mem1}
+		\end{figure}
+
+		实现如下：
+
 		\begin{listing}[H]
 		\inputminted[tabsize=2, firstline=118, lastline=127,
 		linenos=true]{c}{../ZOS/src/kernel/memory.c}
 		\end{listing}
 
-		前端后端均被占用
+		前端后端均被占用:
+
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=.8\textwidth]{fig/mem3.pdf}
+			\caption{前端后端均被占用}
+			\label{fig:mem1}
+		\end{figure}
+
+		实现如下：
+
 		\begin{listing}[H]
 		\inputminted[tabsize=2, firstline=128, lastline=141,
 		linenos=true]{c}{../ZOS/src/kernel/memory.c}
@@ -166,22 +234,47 @@
     \section{输入输出}
 	
 		输入作为人与计算机之间最基本的交互方式，其中键盘和鼠标作为标准输入设备。
+
 		\subsection{键盘输入}
+		
+		\begin{listing}[H]
+		\inputminted[tabsize=2, firstline=162, lastline=170,
+		linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
+		\end{listing}
+		
 		\subsection{鼠标输入}
+
+		\begin{listing}[H]
+		\inputminted[tabsize=2, firstline=247, lastline=265,
+		linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
+		\inputminted[tabsize=2, firstline=329, lastline=338,
+		linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
+		\end{listing}
+
 		\subsection{标准输出}
 		
                 
 	\section{多道程序系统}
-		现代的计算机已经不仅仅作为数字计算的工具，而进入大众生活的计算机被赋予了更多的生活需求，用户可能在看电影的同时查看电子邮件，也有可能在写论文的时候进入浏览器查询相关资料，但是更重要的是计算机往往在用户不经意间打开防病毒软件等保证用户计算机的安全\cite{tanenbaum2009modern}。
+
+		现代的计算机已经不仅仅作为数字计算的工具，而进入大众生活的计算机被赋予了更多的生活需求，
+		用户可能在看电影的同时查看电子邮件，也有可能在写论文的时候进入浏览器查询相关资料，
+		但是更重要的是计算机往往在用户不经意间打开防病毒软件等保证用户计算机的安全\cite{tanenbaum2009modern}。
+
 		由此可见多进程的工作方式在计算机工作中同样不可或缺。
 
-		但是在实际的处理过程中，计算机并不能同时处理多个程序，所以必须采用分时的设计，关于分时操作系统的设计在下一节。在此有两个概念，同时处理和多个程序，同时处理属于分时，多道程序属于多道程序设计。
+		但是在实际的处理过程中，计算机并不能同时处理多个程序，所以必须采用分时的设计，
+		关于分时操作系统的设计在下一节。
+		在此有两个概念，同时处理和多个程序，同时处理属于分时，多道程序属于多道程序设计。
 
 		首先要处理的问题是如何在运行多个程序，。
+
 	\section{分时操作系统}
-		在上一节中说到分时是使得在用户看来计算机的多道程序同时运行，多道程序已经实现了，分时简单说是使得CPU在用户不能明显感觉到的时间间隔内切换运行多个程序，在切换的过程中...
+
+		在上一节中说到分时是使得在用户看来计算机的多道程序同时运行，多道程序已经实现了，
+		分时简单说是使得CPU在用户不能明显感觉到的时间间隔内切换运行多个程序，在切换的过程中...
 	
 \chapter{实现对外兼容及安全防护}
+
 从接口设计及安全防护的角度完善操作系统
 
 

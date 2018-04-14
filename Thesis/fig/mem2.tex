@@ -9,14 +9,13 @@
 
 \begin{bytefield}{32}
 \bitheader{0,7-8,15-16,23-24,31-32,40} \\
-\begin{rightwordgroup}{before} 
+\begin{rightwordgroup}{before}
 \bitbox{8}{\hyperlink{protocol-version}{occupation}} &
-\bitbox{8}{\hyperlink{packet-type-modifier}{idle}} &
-\bitbox{8}{\hyperlink{packet-type-modifier}{free}} &
+\bitbox{16}{\hyperlink{packet-type-modifier}{free}} &
 \bitbox{8}{\hyperlink{packet-type-modifier}{idle}} &
 \bitbox{8}{\hyperlink{subchannel}{occupation}} 
 \end{rightwordgroup} \\
-    \begin{rightwordgroup}{update}
+\begin{rightwordgroup}{update}
 \bitbox{8}{\hyperlink{protocol-version}{occupation}} &
 \bitbox{24}{\hyperlink{packet-type-modifier}{free}} &
 \bitbox{8}{\hyperlink{subchannel}{occupation}} 
