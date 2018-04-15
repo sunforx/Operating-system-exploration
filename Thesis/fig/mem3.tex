@@ -9,17 +9,18 @@
 		\bitheader{0,7-8,15-16,23-24,31-32,40} \\
 		
 		\begin{rightwordgroup}{释放前} 
+			\bitbox{8}{空闲} &
 			\bitbox{8}{分配} &
-			\bitbox{8}{空闲} &
 			\bitbox{8}{释放} &
-			\bitbox{8}{空闲} &
-			\bitbox{8}{分配}
+			\bitbox{8}{分配} &
+			\bitbox{8}{空闲}
 		\end{rightwordgroup} \\
 
 		\begin{rightwordgroup}{释放后}
+			\bitbox{16}{空闲} &
 			\bitbox{8}{分配} &
-			\bitbox{24}{空闲} &
-			\bitbox{8}{分配} 
+			\bitbox{8}{分配} &
+			\bitbox{8}{空闲}
 		\end{rightwordgroup} \\
 
 	\end{bytefield}
