@@ -1,26 +1,27 @@
 \documentclass[11pt]{standalone}
-\usepackage[margin=1in]{geometry}
-\usepackage{longtable}
 \usepackage[bitheight=6ex]{bytefield}
-\usepackage{color}
-\usepackage[bookmarksopen=true]{hyperref}
+\usepackage{xeCJK}
 
 \begin{document}
 
-\begin{bytefield}{32}
-\bitheader{0,7-8,15-16,23-24,31-32,40} \\
-\begin{rightwordgroup}{before} 
-\bitbox{8}{\hyperlink{protocol-version}{occupation}} &
-\bitbox{8}{\hyperlink{packet-type-modifier}{idle}} &
-\bitbox{8}{\hyperlink{packet-type-modifier}{free}} &
-\bitbox{8}{\hyperlink{packet-type-modifier}{idle}} &
-\bitbox{8}{\hyperlink{subchannel}{occupation}} 
-\end{rightwordgroup} \\
-    \begin{rightwordgroup}{update}
-\bitbox{8}{\hyperlink{protocol-version}{occupation}} &
-\bitbox{24}{\hyperlink{packet-type-modifier}{free}} &
-\bitbox{8}{\hyperlink{subchannel}{occupation}} 
-\end{rightwordgroup} \\
-\end{bytefield}
+	\begin{bytefield}{40}
+
+		\bitheader{0,7-8,15-16,23-24,31-32,40} \\
+
+		\begin{rightwordgroup}{释放前} 
+			\bitbox{8}{分配} &
+			\bitbox{8}{空闲} &
+			\bitbox{8}{释放} &
+			\bitbox{8}{空闲} &
+			\bitbox{8}{分配} 
+		\end{rightwordgroup} \\
+
+		\begin{rightwordgroup}{释放后}
+			\bitbox{8}{分配} &
+			\bitbox{24}{空闲} &
+			\bitbox{8}{分配}
+		\end{rightwordgroup} \\
+
+	\end{bytefield}
 
 \end{document}

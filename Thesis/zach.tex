@@ -60,17 +60,33 @@
 		操作系统最初出现的场景是一个工程师小组设计、建造一台机器，之后使用机器语言编写程序并通过将上千根电缆接到插线板上连接成电路，
 		控制机器的基本功能，进而操作机器运算诸如制作正弦、余弦、对数表或计算炮弹弹道的简单数学运算。
 
-		这里的机器语言就充当着操作系统的角色——操作硬件得到想要的结果。
+		这里的人工就充当着操作系统的角色——根据程序直接操作硬件使其运算得出结果。
 
 		\subsection{第二代}
 
-		在晶体管发明后，计算机可靠程度大大增加，计算机生产厂商成批生产
+		在晶体管发明后，计算机可靠程度大大增加，计算机开始被一些公司、政府部门或大学使用。
 
-		改进后的操作系统的载体是穿孔纸带，将事先设计好的程序按照流程在纸带上打孔，通过读入控制计算机。
+		改进后出现了操作系统的载体，卡片和较后期磁带打孔纸带。
 
-		批处理
+        由于打孔纸带是分次读入，一次只能读入一个的作业，出现了批处理系统如图\ref{fig:btss}: 
 
-		\subsection{第三代}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[width=.8\textwidth]{fig/btss.png}
+				\caption{批处理系统}
+				\label{fig:btss}
+			\end{figure}
+
+			\begin{description}
+				\item[a.]程序员将打孔纸带拿到1401机\footnote{IBM 1401：数据处理计算机\cite{ibm1401}}
+                \item[b.]1401机将批处理作业读到磁带上
+                \item[c.]操作员将输入磁带送至7094机\footnote{IBM 7094：专为大型科学计算而设计，具有出色的性价比和扩展的计算能力\cite{ibm7094}}
+                \item[d.]7094机进行计算
+                \item[e.]操作员将输出磁带送到1401机
+                \item[f.]1401机打印输出
+			\end{description}
+                
+		\subsection{第三代}        
 
 		\subsection{第四代}
 
@@ -80,7 +96,7 @@
 
 	\section{操作系统启动流程}
 
-
+	
 \chapter{空白操作系统的启动}
 
 	\section{操作系统启动流程}
@@ -180,14 +196,14 @@
 
 		\begin{figure}[h]
 			\centering
-			\includegraphics[width=.8\textwidth]{fig/mem0.pdf}
+			\includegraphics[width=.7\textwidth]{fig/mem0.pdf}
 			\caption{前端空闲}
 			\label{fig:mem0}
 		\end{figure}
 
 		\begin{figure}[h]
 			\centering
-			\includegraphics[width=.8\textwidth]{fig/mem1.pdf}
+			\includegraphics[width=.7\textwidth]{fig/mem1.pdf}
 			\caption{前端可用，且后端空闲}
 			\label{fig:mem1}
 		\end{figure}
@@ -203,9 +219,9 @@
 
 		\begin{figure}[h]
 			\centering
-			\includegraphics[width=.8\textwidth]{fig/mem2.pdf}
+			\includegraphics[width=.7\textwidth]{fig/mem2.pdf}
 			\caption{后端空闲}
-			\label{fig:mem1}
+			\label{fig:mem3}
 		\end{figure}
 
 		实现如下：
@@ -219,9 +235,9 @@
 
 		\begin{figure}[h]
 			\centering
-			\includegraphics[width=.8\textwidth]{fig/mem3.pdf}
+			\includegraphics[width=.7\textwidth]{fig/mem3.pdf}
 			\caption{前端后端均被占用}
-			\label{fig:mem1}
+			\label{fig:mem4}
 		\end{figure}
 
 		实现如下：
