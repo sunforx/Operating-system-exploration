@@ -34,10 +34,10 @@
 \chapter{思路}
 
 	此次的思路由四部分组成：\\
-	\hspace*{1cm}1、操作系统探究 \\
-	\hspace*{1cm}2、空白操作系统的启动 \\
-	\hspace*{1cm}3、编写操作系统内核 \\
-	\hspace*{1cm}4、实现对外兼容及安全防护
+	\hspace*{1.5cm}1、操作系统探究 \\
+	\hspace*{1.5cm}2、空白操作系统的启动 \\
+	\hspace*{1.5cm}3、编写操作系统内核 \\
+	\hspace*{1.5cm}4、实现对外兼容及安全防护
 	
 	\section{操作系统探究}
 	从历史上计算机操作系统的发展联系到人们的日常生活，寻求符合操作系统发展且适应用户使用的特征要素。
@@ -120,10 +120,13 @@
 		MBR负责指出操作系统的位置，主分区第一个扇区的物理位置（柱面、磁头、扇区号等等）
 
 		\begin{listing}[H]
-		\inputminted[tabsize=2, firstline=6, lastline=6,
-		linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
-		\inputminted[tabsize=2, firstline=12, lastline=29,
-		linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
+			
+			\inputminted[tabsize=2, firstline=6, lastline=6,
+			linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
+			\inputminted[tabsize=2, firstline=12, lastline=29,
+			linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
+			\caption{Example of a listing.}
+			\label{lst:example}
 		\end{listing}
 		
 		\inputminted[tabsize=2, firstline=43, lastline=45,
@@ -142,10 +145,16 @@
 	首个操作系统为测试操作，目的是测试MBR可以成功启动操作系统
 
 	\begin{minted}{nasm}
-			fin:
-			    HLT
-			    JMP fin
+		fin:
+		    HLT
+		    JMP fin
 	\end{minted}
+	
+	\begin{listing}[H]
+		fin:
+			HLT
+			JMP fin
+	\end{listing}
 		
 \chapter{编写操作系统内核}
 
@@ -344,16 +353,6 @@
 可以参考模版目录中的 appendix.tex 文件来写。
 
 \chapter{主要程序代码} %附录二
-
-% 插入程序代码
-%\inputminted[fontsize=\small]{c}{hello.c}
-
-% 也可以这样
-\begin{listing}[H]
-  %\inputminted{c}{hello.c}
-  %\caption{Hello, world!}
-  %\label{lst:hello}
-\end{listing}  
 
 \end{document} % 结束。不要动下面几行！
 
