@@ -1,0 +1,73 @@
+\documentclass{swfcthesis}
+
+\addbibresource{bb.bib}    % 参照教程自己去写一个.bib文件
+
+\begin{document}
+
+\Title{操作系统探索}
+\Author{尹志成}
+\Advisor{王晓林}
+\AdvisorTitle{讲师}
+\AdvisorInfo{王晓林，男，49 岁，硕士，讲师，毕业于英国格林尼治大学，分布式计算系统专业。
+  现任西南林业大学计信学院教师。执教 Linux、操作系统、网络技术等方面的课程，有丰富的 Linux 教学和系统管理经验。}
+\Month{六}
+\Year{二〇一八}
+\Subject{计算机科学与技术专业}    %专业名称（比如 计算机科学与技术专业）
+\Abstract{操作系统最初的诞生是为了搭配进行简单繁重的数字运算机，但随着时代的演进，
+  计算机不仅作为处理各种运算的机器，其附加价值也越来越被人们看重，跟随着计算机的发展，
+  操作系统的使命也在一代代的改变，（约两百字）}
+\Keywords{操作系统}
+\Acknowledgments{感谢，}
+\enTitle{Operating system exploration}
+\enAuthor{Zach Yin}
+\enAbstract{英文摘要}
+\enKeywords{Operate System}
+
+%%% 下面六行不要动！
+\makepreliminarypages% 封面
+\frontmatter          
+\tableofcontents     % 目录
+\listoffigures       % 插图目录
+\listoftables        % 表格目录
+\mainmatter
+
+% 引言
+\include{chapters/intro}
+
+% 思路
+\include{chapters/method}
+
+% 原理
+\include{chapters/principle}
+
+% 启动
+\include{chapters/boot}
+
+% 内核
+\include{chapters/kernel}
+
+% 兼容
+\include{chapters/compatible}
+
+%%% 正文部分到此结束。下面是『参考文献』、『指导教师简介』、『鸣谢』、『附录』
+
+%% 不要动下面四行！
+\Appendix{}
+\printbibliography[heading={bibintoc},title={参考文献}] % 输出参考文献
+\advisorinfopage{}                 % 输出指导教师简介
+\acknowledgmentspage{}             % 输出鸣谢
+
+%%% 下面是附录部分，可以没有。
+
+% 附录
+\include{chapters/appendix}
+
+% 程序
+\include{chapters/program}
+
+\end{document} % 结束。不要动下面几行！
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
