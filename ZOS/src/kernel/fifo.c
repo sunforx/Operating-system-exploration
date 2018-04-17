@@ -1,3 +1,4 @@
+
 /* FIFO */
 
 #include "bootpack.h"
@@ -9,11 +10,11 @@ void fifo32_init(struct FIFO32 *fifo, int size, int *buf, struct TASK *task)
 {
 	fifo->size = size;
 	fifo->buf = buf;
-	fifo->free = size; /*空*/
+	fifo->free = size;	/*空*/
 	fifo->flags = 0;
-	fifo->p = 0; /*写入位置*/
-	fifo->q = 0; /*读取位置*/
-	fifo->task = task; /*有数据写入时需要唤醒的任务*/
+	fifo->p = 0;		/*写入位置*/
+	fifo->q = 0;		/*读取位置*/
+	fifo->task = task;	/*有数据写入时需要唤醒的任务*/
 	return;
 }
 
