@@ -1,9 +1,26 @@
 swfcthesis.cls
 tutorial.pdf
-btss.tex
 printable.tex
-test.pdf
-test.tex
-fig/Makefille
+
+btss.tex
+test*.*
+
+mem*h*
+
+# sample
+Makefile
+bf-example.*
+bytefield.pdf
 
 _minted-thesis/
+
+# chapters/
+*.aux
+
+thesis.*
+!thesis.tex
+!thesis.pdf
+
+mem*.*
+!mem*.pdf
+!mem*.tex

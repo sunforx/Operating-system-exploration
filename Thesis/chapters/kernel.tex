@@ -27,15 +27,17 @@
 
 \subsection{内存分配}
 
-
 \begin{listing}[H]
-  \inputminted[tabsize=2, firstline=68, lastline=80,
+  \inputminted[tabsize=2, firstline=68, lastline=78,
   linenos=true]{c}{../ZOS/src/kernel/memory.c}
 \end{listing}
 
+\newpage
 \subsection{内存释放}
 
-为保证磁盘空闲空间尽可能不呈现碎片化，内存释放主要分为三种情况：
+为保证磁盘空闲空间尽可能少的碎片化，内存释放首先考虑的是与附近空闲空间进行合并。
+
+具体分为三种情况：
 
 \begin{description}
 \item[前端空闲:]释放内存的相连前端是空闲内存或释放内存相连两端都是空闲内存
@@ -43,28 +45,37 @@
 \item[前端后端均不可用:]挪动空闲空间以合并
 \end{description}
 
-已知：待释放的空间的开始地址和空间大小
+已知：待释放的空间的地址和空间大小
 
-遍历内存，直到
-当待释放的空间free[i]前方
+根据空闲内存表free的编号查找地址大于待释放空间的空闲内存，
+并根据得到的空闲空间编号及大小区分此时的待释放内存应当采取何种方式释放。
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=91, lastline=95,
+  linenos=true]{c}{../ZOS/src/kernel/memory.c}
+\end{listing}
+
 \newpage
+前端空闲：
 
-前端空闲如图\ref{fig:mem0}和图\ref{fig:mem1}所示: 
+当待释放的空间前方有空闲空间时，将free[i-1]的大小加上释放空间的大小
+
+内存释放前后情况如图\ref{fig:mem0}和图\ref{fig:mem1}所示: 
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{fig/mem0.pdf}
+  \includegraphics[width=.8\textwidth]{fig/mem0.pdf}
   \caption{前端空闲}
   \label{fig:mem0}
 \end{figure}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{fig/mem1.pdf}
+  \includegraphics[width=.8\textwidth]{fig/mem1.pdf}
   \caption{前端可用，且后端空闲}
   \label{fig:mem1}
 \end{figure}
 
+\newpage
 实现如下：
 
 \begin{listing}[H]
@@ -72,11 +83,12 @@
   linenos=true]{c}{../ZOS/src/kernel/memory.c}
 \end{listing}
 
+\newpage
 后端空闲:
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{fig/mem2.pdf}
+  \includegraphics[width=.8\textwidth]{fig/mem2.pdf}
   \caption{后端空闲}
   \label{fig:mem3}
 \end{figure}
@@ -88,45 +100,56 @@
   linenos=true]{c}{../ZOS/src/kernel/memory.c}
 \end{listing}
 
+\newpage
 前端后端均被占用:
 
+由于被释放空间周围没有空闲内存，为保证free内各段内存仍然按照内存地址升序排列，
+使空闲空间计数最大值加一，free[i]后续空闲内存序号加一，并将释放空间序号定为i。
 \begin{figure}[h]
   \centering
-  \includegraphics[width=.7\textwidth]{fig/mem3.pdf}
+  \includegraphics[width=.8\textwidth]{fig/mem3.pdf}
   \caption{前端后端均被占用}
   \label{fig:mem4}
 \end{figure}
 
 实现如下：
-
 \begin{listing}[H]
   \inputminted[tabsize=2, firstline=128, lastline=141,
   linenos=true]{c}{../ZOS/src/kernel/memory.c}
 \end{listing}
-
+\newpage
 \section{输入输出}
 
 输入作为人与计算机之间最基本的交互方式，其中键盘和鼠标作为标准输入设备。
 
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=151, lastline=151,
+  linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
+\end{listing}
+
+
+\newpage
 \subsection{键盘输入}
-
+当输入为256到511，系统判定为键盘输入。
 \begin{listing}[H]
-  \inputminted[tabsize=2, firstline=162, lastline=170,
+  \inputminted[tabsize=2, firstline=161, lastline=161,
   linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
 \end{listing}
+键盘输入分为字母输入，常规按键，特殊按键
 
+
+\newpage
 \subsection{鼠标输入}
-
+当输入为512到767，系统判定为鼠标输入。
 \begin{listing}[H]
-  \inputminted[tabsize=2, firstline=247, lastline=265,
-  linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
-  \inputminted[tabsize=2, firstline=329, lastline=338,
+  \inputminted[tabsize=2, firstline=247, lastline=247,
   linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
 \end{listing}
 
+\newpage
 \subsection{标准输出}
 
-
+\newpage
 \section{多道程序系统}
 
 现代的计算机已经不仅仅作为数字计算的工具，而进入大众生活的计算机被赋予了更多的生活需求，
@@ -141,6 +164,7 @@
 
 首先要处理的问题是如何在运行多个程序，。
 
+\newpage
 \section{分时操作系统}
 
 在上一节中说到分时是使得在用户看来计算机的多道程序同时运行，多道程序已经实现了，
