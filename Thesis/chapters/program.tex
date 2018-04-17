@@ -1,10 +1,17 @@
 \chapter{主要程序代码} %附录二
 
-\section{初始启动程序代码（ipl09.nas）}
+\section{初始启动程序代码（ipl09.nas）节选}
+\label{sec:ipl09.nas}
+\begin{listing}
+  \inputminted[tabsize=2, firstline=12, lastline=29,
+  linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
+  \caption{FAT12格式磁盘专用代码}
+  \label{sec:fat12}
+\end{listing}
 
-\begin{listing}[H]
-  \inputminted[tabsize=2, 
-  linenos=true]{c}{../ZOS/src/kernel/ipl09.nas}
-  \caption{ipl09.nas}
-  \label{sec:ipl09.nas}
+\begin{listing}
+  \inputminted[tabsize=2, firstline=76, lastline=88,
+  linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
+  \caption{将磁盘内容读入内存}
+  \label{sec:read}
 \end{listing}
