@@ -1,0 +1,28 @@
+\section{输入输出}
+
+输入作为人与计算机之间最基本的交互方式，其中键盘和鼠标作为标准输入设备。
+
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=151, lastline=151,
+  linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
+\end{listing}
+
+\newpage
+\subsection{键盘输入}
+当输入为256到511，系统判定为键盘输入。
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=161, lastline=161,
+  linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
+\end{listing}
+键盘输入分为字母输入，常规按键，特殊按键
+
+\newpage
+\subsection{鼠标输入}
+当输入为512到767，系统判定为鼠标输入。
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=247, lastline=247,
+  linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
+\end{listing}
+
+\newpage
+\subsection{标准输出}
