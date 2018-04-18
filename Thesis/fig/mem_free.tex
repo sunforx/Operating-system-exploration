@@ -1,0 +1,30 @@
+\documentclass[11pt]{standalone}
+    \usepackage[bitheight=6ex]{bytefield}
+    \usepackage{xeCJK}
+    
+    \begin{document}
+    
+    \newcommand{\descbox}[2]{\parbox[c][3.8\baselineskip]{0.95\width}{%
+    \raggedright #1\vfill #2}}
+    \begin{bytefield}[bitheight=4\baselineskip]{32}
+    
+    \bitbox[]{8}{\texttt{} \\[2\baselineskip]
+    \texttt{}} & \bitbox[b]{24}{组号} &
+    \bitbox[b]{24}{空间大小} \\
+    
+    \bitbox[]{8}{\texttt{0x00003FFF} \\[2\baselineskip]
+    \texttt{0x00003000}} & \bitbox[lrt]{24}{3} &
+    \bitbox{24}{FFF}\\
+    
+    \bitbox[]{8}{\texttt{0x00001FFF} \\[2\baselineskip]
+    \texttt{0x00001000}} & \bitbox{24}{2} &
+    \bitbox{24}{FFF}\\
+    
+    \bitbox[]{8}{\texttt{0x00000FFF} \\[2\baselineskip]
+    \texttt{0x00000000}} & \bitbox{24}{1} &
+    \bitbox{24}{FFF}
+    
+    \end{bytefield}
+    
+    \end{document}
+    
