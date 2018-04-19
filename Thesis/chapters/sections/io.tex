@@ -1,28 +1,65 @@
 \section{输入输出}
 
-输入作为人与计算机之间最基本的交互方式，其中键盘和鼠标作为标准输入设备。
+输入作为人与计算机之间最基本的交互方式，其中键盘和鼠标是标准输入设备。
 
-\begin{listing}[H]
-  \inputminted[tabsize=2, firstline=151, lastline=151,
-  linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
-\end{listing}
+接收输入信号的函数fifo32\_get(\&fifo)负责接收所有输入设备发向计算机的数据。
+
+计算机受到数据后根据数据的大小区间区分这一段数据是何处传来的并进行相应处理。
+
+% --------------------
 
 \newpage
 \subsection{键盘输入}
-当输入为256到511，系统判定为键盘输入。
+
+键盘作为最基础也是大众使用最精确的输入设备，它负担着很多的责任：
+\begin{enumerate}
+  \item 输入文本按键
+  \item 修改文本输入的基本指令按键
+  \item 修改计算机的状态特殊按键
+\end{enumerate}
+
+按下不同的功能按键，键盘向计算机发送的指令是不一样的。
+
+若输入指令为256到511，系统判定为键盘输入。
+
 \begin{listing}[H]
   \inputminted[tabsize=2, firstline=161, lastline=161,
   linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
 \end{listing}
-键盘输入分为字母输入，常规按键，特殊按键
 
+若输入指令为256-0x80+256时，为输入文本指令;
+
+输入指令为退格键，回车键;
+
+修改计算机的状态特殊按键如下:
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{|l|c|l|c|}
+    \hline 功能 & 指令 & 功能 & 指令 \\
+    \hline 左Shift & 256+0x2a & CapsLock & 256+0x3a \\ 
+    \hline 右Shift & 256+0x36 & NumLock off & 256+0xaa \\
+    \hline 左Shift off & 256+0xaa & ScrollLock & 256+0xaa \\
+    \hline 右Shift off & 256+0xb6 & & \\
+    \hline
+  \end{tabular}
+  \caption{修改状态的特殊指令}
+  \label{tab:hello}
+\end{table}
+
+% ---------------------
 \newpage
 \subsection{鼠标输入}
+
+鼠标作为操作系统图形化后。。。
+
 当输入为512到767，系统判定为鼠标输入。
+
+从鼠标传到计算机的信号都是3个字节一组的，分别为x坐标，y坐标以及鼠标按键状态。
 \begin{listing}[H]
   \inputminted[tabsize=2, firstline=247, lastline=247,
   linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
 \end{listing}
 
+% ----------------------
 \newpage
 \subsection{标准输出}

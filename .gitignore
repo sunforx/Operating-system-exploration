@@ -24,3 +24,5 @@ thesis.*
 mem*.*
 !mem*.pdf
 !mem*.tex
+
+windowsKernel.png
