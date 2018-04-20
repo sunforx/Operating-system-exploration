@@ -1,0 +1,32 @@
+\input{printable}
+
+\begin{document}
+\begin{tikzpicture}
+  \tikzstyle{every node} = [rectangle]
+
+  \node (start)[]{电源};
+  \node (bios)[right=of start]{BIOS};
+  \node (mbr)[right=of bios]{MBR};
+  \node (os)[right=of mbr]{操作系统};
+  
+  \node (srcd) [below=of start] {输入磁带};
+  \node (xtcd) [right=of srcd]{系统磁带};
+  \node (sccd) [right=of xtcd]{输出磁带};
+
+  \node (null) [below=of srcd] {    };
+  \node (bios)[right=of start]{BIOS};
+
+  \foreach \from/\to in {start/bios, bios/mbr, mbr/os, srcd/xtcd, xtcd/sccd}
+  \draw [->] (\from) -- (\to);
+
+  \foreach \from/\to in {null/bi}
+  \draw [->] (\from) -- (\to);
+
+\end{tikzpicture}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

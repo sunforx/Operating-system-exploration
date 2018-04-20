@@ -2,13 +2,39 @@
 
 输入作为人与计算机之间最基本的交互方式，其中键盘和鼠标是标准输入设备。
 
-接收输入信号的函数fifo32\_get(\&fifo)负责接收所有输入设备发向计算机的数据。
+CPU通过PIC\footnote{PIC通过中断控制请求使用CPU，即在需要的时候对CPU发出中断请求，暂停CPU现在运行的作业，先完成中断请求再继续之前的作业}
+（Programmable interrupt controller）与外部设备进行数据交换。
+键盘作为计算机最早的外设，位于主PIC的IRQ1;
+而鼠标作为第四代计算机才出现的输入设备，位于从PIC的IRQ12，而从PIC连接在主PIC的IRQ2。
+
+输入设备输入时是将一个个指令\footnote{每一次敲击键盘按键，移动鼠标，点击鼠标都会产生响应的指令}
+发送到CPU，而CPU同时只能处理一个指令（虽然处理时间非常短），
+所以需要一个缓冲区fifo\footnote{缓冲区fifo采用先入先出的数据结构，使得先传入的输入指令能够率先得到执行}来接收输入数据。
+
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=40, lastline=44,
+  linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
+  \caption{数据结构-缓冲区fifo}
+        \label{lst:fifo}
+\end{listing}
+\begin{description}
+  \item[*buf:]缓冲区在内存中的地址;
+  \item[p, q:]下一个写入地址，下一个数据读入地址;
+  \item[size, free:]缓冲区大小，空闲空间大小;
+  \item[TASK flags:]溢出标记（-1和0分别表示有溢出和无溢出）;
+  \item[TASK *task:]在当前位置释放内存。
+  \end{description}
+
+操作系统运行后始终通过函数fifo32\_status(\&fifo)\footnote{存储总量=size-free}
+监测fifo缓冲区内是否有数据，如果有数据才执行下一步对输入指令的响应。
+接收输入信号的函数fifo32\_get(\&fifo)负责从缓冲区fifo中取出一个数据（键盘为1个字节，鼠标为4个字节）交由CPU处理。
 
 计算机受到数据后根据数据的大小区间区分这一段数据是何处传来的并进行相应处理。
+一旦接收到指令为256到511，系统判定为键盘输入;
+当指令为512到767，系统判定为鼠标输入。
 
 % --------------------
 
-\newpage
 \subsection{键盘输入}
 
 键盘作为最基础也是大众使用最精确的输入设备，它负担着很多的责任：
@@ -19,13 +45,6 @@
 \end{enumerate}
 
 按下不同的功能按键，键盘向计算机发送的指令是不一样的。
-
-若输入指令为256到511，系统判定为键盘输入。
-
-\begin{listing}[H]
-  \inputminted[tabsize=2, firstline=161, lastline=161,
-  linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
-\end{listing}
 
 若输入指令为256-0x80+256时，为输入文本指令;
 
@@ -47,19 +66,34 @@
 \end{table}
 
 % ---------------------
-\newpage
+
 \subsection{鼠标输入}
 
-鼠标作为操作系统图形化后。。。
+鼠标作为第四代计算机才出现的输入设备，因为涉及到坐标位置的变化，它的输入指令较键盘也相对复杂，
+从鼠标传到计算机的信号都是4个字节一组的，其中第一个字节表示状态，其他3个有效指令分别为x坐标，y坐标以及鼠标按键状态。
 
-当输入为512到767，系统判定为鼠标输入。
-
-从鼠标传到计算机的信号都是3个字节一组的，分别为x坐标，y坐标以及鼠标按键状态。
 \begin{listing}[H]
-  \inputminted[tabsize=2, firstline=247, lastline=247,
-  linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
+  \inputminted[tabsize=2, firstline=126, lastline=129,
+  linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
+  \caption{数据结构-鼠标输入的数据}
+        \label{lst:mouse_data}
 \end{listing}
+\begin{description}
+  \item[buf:]存放鼠标一个数据指令的数组;
+  \item[phase:]当前鼠标工作的阶段;
+  \item[x, y]缓冲区大小，空闲空间大小;
+  \item[btn]按键状态。
+\end{description}
 
 % ----------------------
-\newpage
+
 \subsection{标准输出}
+
+由于是面对硬件开发操作系统，无法使用各种成熟的库和函数，
+所以输出也只能从修改VRAM的一个个像素开始。
+
+流程如下：
+通过一系列指令后，系统需要向屏幕打印字符，
+则从数组中读取一个数据，并从字体库（包含基本字体的像素化数组）中找到对应的显示方法，
+写入VRAM（Video RAM），在屏幕对应坐标范围内显示数据，
+循环读取下一个并显示下一个数据。
