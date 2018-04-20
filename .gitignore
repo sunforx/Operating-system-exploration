@@ -16,6 +16,10 @@ _minted-thesis/
 
 # chapters/
 *.aux
+*.log
+*.synctex.gz
+*.fdb_latexmk
+*.fls
 
 thesis.*
 !thesis.tex

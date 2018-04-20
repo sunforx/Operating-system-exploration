@@ -47,24 +47,26 @@ MBR的主要部分是Bootstrap code area，即前446个字节。
 \item 磁头1，柱面79，读取1-18扇区 (C79-H1-S1)-(C79-H1-S18)
 \end{enumerate}
 
-按以上策略将磁盘内容读入内存，核心代码如程序\ref{sec:readfrag}
-\begin{listing}[H]
-  \inputminted[tabsize=2, firstline=138, lastline=147,
-  linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
-  \caption{读取磁盘数据到内存}
-  \label{sec:readfrag}
-\end{listing}
+按以上策略将磁盘内容读入内存，核心代码如程序见\ref{sec:readfrag}。
+
 readfast 位于代码第76行，JMP readfast 在此代表循环执行。
 
 \section{制作空白操作系统}
 
 为测试操作系统是否成功被MBR启动，设计将操作系统设置为启动后待机。
 
-\begin{minted}[firstnumber=1]{nasm}
-  fin:
-  HLT
-  JMP fin
-\end{minted}
+% \begin{minted}[firstnumber=1]{nasm}
+%   fin:
+%   HLT
+%   JMP fin
+% \end{minted}
+
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=1,
+  linenos=true]{c}{fig/blankos.c}
+  \caption{空白操作系统}
+  \label{lst:blankos}
+\end{listing}
 
 按下电源键，经过启动步骤系统循环执行HLT\footnote{HLT: 让CPU停止动作并进入待机状态\cite{30_osKawaiHidemi200630}}使得操作系统计算机始终处于待机状态，启动成功。
 

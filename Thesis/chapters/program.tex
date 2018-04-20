@@ -15,3 +15,47 @@
   \caption{将磁盘内容读入内存}
   \label{sec:read}
 \end{listing}
+
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=138, lastline=147,
+  linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
+  \caption{读取磁盘数据到内存}
+  \label{sec:readfrag}
+\end{listing}
+
+\section{内存管理程序代码（memory.c）节选}
+
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=68, lastline=78,
+  linenos=true]{c}{../ZOS/src/kernel/memory.c}
+  \caption{分配内存}
+  \label{lst:alloc}
+\end{listing}
+
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=91, lastline=95,
+  linenos=true]{c}{../ZOS/src/kernel/memory.c}
+  \caption{确定采取何种方式释放内存}
+  \label{lst:rw}
+\end{listing}
+
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=98, lastline=116,
+  linenos=true]{c}{../ZOS/src/kernel/memory.c}
+  \caption{前端可用}
+  \label{lst:mem1}
+\end{listing}
+
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=118, lastline=127,
+  linenos=true]{c}{../ZOS/src/kernel/memory.c}
+  \caption{后端空闲}
+  \label{lst:mem2}
+\end{listing}
+
+\begin{listing}[H]
+  \inputminted[tabsize=2, firstline=128, lastline=141,
+  linenos=true]{c}{../ZOS/src/kernel/memory.c}
+  \caption{前端后端均被占用}
+  \label{lst:mem3}
+\end{listing}

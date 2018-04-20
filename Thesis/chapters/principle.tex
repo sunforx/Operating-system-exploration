@@ -99,7 +99,8 @@
 \section{操作系统的规范化}
 
 \subsection{Unix及类Unix}
-
+Unix及类Unix将用户空间与系统空间划分开，以此规定内核的边界，将存在于系统空间的代码与数据的集合称为内核。
+由此也存在了不同的CPU运行模式：系统态和用户态。
 \begin{enumerate}
   \item 系统调用接口
   \item 进程管理
@@ -118,11 +119,14 @@
 
 \subsection{Windows}
 
+Microsoft Windows 与 Unix最大的不同是，它将较低层的硬件靠得最近的一部分叫做“内核”，
+因此，Windows也选择将图形界面和视窗机制的实现也放在了内核中。
+
+大体来说，Windows内核层次~\cite{毛德操2005windows}如下：
 \begin{enumerate}
   \item 系统调用接口
-  \item 进程管理
-  \item 内存管理
-  \item 虚拟文件系统
-  \item 网络堆栈
-  \item 设备驱动程序
+  \item 中断/异常入口
+  \item Executive(管理层)、对象管理、内存管理、进程管理、安全管理、I/O管理等
+  \item 核心层、设备驱动底层
+  \item HAL(硬件抽象层)
 \end{enumerate}
