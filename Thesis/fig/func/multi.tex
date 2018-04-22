@@ -1,0 +1,42 @@
+%\input{printable}
+\documentclass{standalone}
+    \usepackage{xeCJK}
+    \usepackage{tikz}
+    \usetikzlibrary{shapes.geometric, arrows.meta, arrows,positioning}
+    
+    \begin{document}
+    
+    \begin{tikzpicture}
+      [auto,
+      block/.style={rectangle, draw=black, thick,
+      text width=8em,align=center, rounded corners,
+      minimum height=4em},
+      blank/.style={},
+      line/.style={draw, thick, shorten >=2pt, ->}]
+    
+      \matrix [column sep=5mm,row sep=7mm]
+      {
+        \node [block] (start) {start}; & \\
+        \node [block] (alloc) {task\_alloc()}; & \\
+        \node [block] (run)   {task\_run()}; & 
+        \node [blank] (blank) {}; \\
+        \node [block] (switch) {task\_switch()}; \\ 
+        \node [block] (sleep) {task\_sleep()}; & \\
+      };
+      \begin{scope}[every path/.style=line]
+        \path (start) -- (alloc);
+        \path (alloc) -- (run);
+        \path (run) -- (switch);
+        \path (switch.south) -- ++(5mm,-3mm)  -- ++(27mm,0) |- node {} (run);
+        \path (switch) -- (sleep);
+      \end{scope}
+      
+      \end{tikzpicture}
+    
+    \end{document}
+    
+    %%% Local Variables:
+    %%% mode: latex
+    %%% TeX-master: t
+    %%% End:
+    

@@ -1,0 +1,50 @@
+\documentclass{standalone}
+  \usepackage{xeCJK}
+  \usepackage{tikz}
+  \usetikzlibrary{shapes.geometric, arrows.meta, arrows,positioning}
+  \newcommand*{\h}{\hspace{5pt}}% for indentation
+  \newcommand*{\hh}{\h\h}% double indentation
+  \tikzstyle{arrow} = [->,>=stealth]
+\begin{document}
+\begin{tikzpicture}
+  [auto,
+  block/.style={rectangle, draw=black, thick,
+  text width=10em,align=center, rounded corners,
+  minimum height=4em},
+  block_left/.style ={rectangle, draw=black, thick, fill=white,
+      text width=10em, text ragged, minimum height=4em, inner sep=6pt},
+  line/.style={draw, thick, shorten >=2pt, ->}]
+
+  \matrix [column sep=5mm,row sep=7mm]
+  {
+      \node [block](start){start}; 
+      \node [block_left](init)[right=of start]{ 初始化：\\
+        \hh init\_gdtidt() \\
+        \hh init\_pic() \\
+        \hh fifo32\_init() \\
+        \hh init\_pit() \\
+        \hh init\_keyboard() \\
+        \hh enable\_mouse() \\
+        \hh memman\_init() \\
+        \hh init\_palette() \\
+        \hh shtctl\_init() \\
+        \hh task\_init() \\
+      }; 
+      \node [block](mem)[right=of init]{内存管理}; 
+      \node [block](io) [above=of mem, yshift=1cm, xshift=0cm] {输入/输出}; 
+      \node [block](mul)[below=of mem, yshift=-1cm, xshift=0cm] {多道程序设计}; \\
+  };
+  \begin{scope}[every path/.style=line]
+    \path (start) -- (init);
+    \path (init) -- (mem);
+    \path (init) -- (io);
+    \path (init) -- (mul);
+  \end{scope}
+\end{tikzpicture}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
