@@ -30,3 +30,6 @@ mem*.*
 !mem*.tex
 
 windowsKernel.png
+
+pgf.*
+
