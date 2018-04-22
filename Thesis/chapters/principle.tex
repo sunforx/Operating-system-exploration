@@ -99,8 +99,8 @@
 \section{操作系统的规范化}
 
 \subsection{Unix及类Unix}
-Unix及类Unix将用户空间与系统空间划分开，以此规定内核的边界，将存在于系统空间的代码与数据的集合称为内核。
-由此也存在了不同的CPU运行模式：系统态和用户态。
+Unix 及类 Unix 将用户空间与系统空间划分开，以此规定内核的边界，将存在于系统空间的代码与数据的集合称为内核。
+由此也存在了不同的 CPU 运行模式：系统态和用户态。
 \begin{enumerate}
   \item 系统调用接口
   \item 进程管理
@@ -110,23 +110,24 @@ Unix及类Unix将用户空间与系统空间划分开，以此规定内核的边
   \item 设备驱动程序
 \end{enumerate}
 
-% \begin{figure}[h]
-%   \centering
-%   \includegraphics[width=.4\textwidth]{fig/architectural.jpg}
-%   \caption{kernel}
-%   \label{fig:kernel}
-% \end{figure}
-
 \subsection{Windows}
 
-Microsoft Windows 与 Unix最大的不同是，它将较低层的硬件靠得最近的一部分叫做“内核”，
-因此，Windows也选择将图形界面和视窗机制的实现也放在了内核中。
+Microsoft Windows 与 Unix 最大的不同是，它将较低层的离硬件最近的一部分叫做“内核”，
+因此，Windows也将图形界面和视窗机制的实现也放在了内核中。
 
-大体来说，Windows内核层次~\cite{毛德操2005windows}如下：
+大体来说，Windows内核层次如下：
 \begin{enumerate}
   \item 系统调用接口
   \item 中断/异常入口
-  \item Executive(管理层)、对象管理、内存管理、进程管理、安全管理、I/O管理等
+  \item Executive (管理层)、对象管理、内存管理、进程管理、安全管理、I/O管理等~\cite{毛德操2005windows}
   \item 核心层、设备驱动底层
   \item HAL(硬件抽象层)
 \end{enumerate}
+
+\subsection{小结}
+从市场中用户数量较多的两大操作系统平台看，操作系统已经趋于规范化，功能方面也趋于成熟，
+两大操作系统的功能都非常完备，但功能多了的坏处就是bug出现的概率也随之变高，
+所以windows的蓝屏和linux的系统抖动等操作系统问题都对用户造成了极大的困扰。
+
+想要解决这些问题较好的办法就是精简功能，从降低代码数量开始降低系统bug的出现概率，
+精简功能则要很好的处理好必要功能和非必要功能的筛选分类。

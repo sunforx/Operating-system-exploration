@@ -1,4 +1,4 @@
-\chapter{空白操作系统的启动}
+\chapter{启动空白操作系统}
 
 \section{操作系统启动流程}
 
@@ -29,6 +29,7 @@ MBR的主要部分是Bootstrap code area，即前446个字节。
 
 一个扇区大小为512字节，MBR位于C0-H0-S1（柱面0,磁头0,扇区1）\cite{刘伟2010数据恢复技术深度揭秘}
 从下一个扇区(C0-H0-S2，柱面0，磁头0，扇区2)开始加载。
+
 \begin{listing}[H]
   \inputminted[tabsize=2, firstline=43, lastline=45,
   linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
@@ -50,6 +51,8 @@ MBR的主要部分是Bootstrap code area，即前446个字节。
 按以上策略将磁盘内容读入内存，核心代码如程序见\ref{sec:readfrag}。
 
 readfast 位于代码第76行，JMP readfast 在此代表循环执行。
+当循环执行完毕，表示磁盘内容已经全部加载到内存中，
+MBR过程成功，开始启动操作系统。
 
 \section{制作空白操作系统}
 
@@ -68,5 +71,5 @@ readfast 位于代码第76行，JMP readfast 在此代表循环执行。
   \label{lst:blankos}
 \end{listing}
 
-按下电源键，经过启动步骤系统循环执行HLT\footnote{HLT: 让CPU停止动作并进入待机状态\cite{30_osKawaiHidemi200630}}使得操作系统计算机始终处于待机状态，启动成功。
-
+按下电源键，经过启动步骤系统循环执行HLT\footnote{HLT: 让CPU停止动作并进入待机状态\cite{30_osKawaiHidemi200630}}
+使得操作系统计算机始终处于待机状态，启动成功。
