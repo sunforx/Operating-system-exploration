@@ -1,0 +1,43 @@
+\documentclass{standalone}
+    \usepackage{xeCJK}
+    \usepackage{tikz}
+    \usetikzlibrary{shapes.geometric, arrows.meta, arrows,positioning}
+    
+  \begin{document}
+  \begin{tikzpicture}
+    [auto,
+    block/.style={rectangle, draw=black, thick,
+    text width=10em,align=center, rounded corners,
+    minimum height=4em},
+    blank/.style={rectangle, thick,
+    text width=10em,align=center, rounded corners,
+    minimum height=4em},
+    line/.style={draw, thick, shorten >=2pt, ->}]
+  
+    \matrix [column sep=5mm,row sep=7mm]
+    {
+        \node [block] (t1) {第一代操作系统\\真空管}; &
+        \node [block] (t2) {第二代操作系统\\晶体管}; &
+        \node [block] (t3) {第三代操作系统\\集成电路}; &
+        \node [block] (t4) {第四代操作系统\\大规模集成电路}; &
+        \node [block] (t5) {第五代操作系统\\移动计算机}; \\
+        \node [blank] (s1) {人工操作}; &
+        \node [blank] (s2) {读卡机和磁带机代替了一部分人工操作}; &
+        \node [blank] (s3) {多道程序设计和分时操作系统技术出现}; &
+        \node [blank] (s4) {计算机的体积缩小，计算机被普及，加入许多生活功能}; &
+        \node [blank] (s5) {移动操作系统}; \\
+    };
+    \begin{scope}[every path/.style=line]
+        \path (t1) -- (t2);
+        \path (t2) -- (t3);
+        \path (t3) -- (t4);
+        \path (t4) -- (t5);
+    \end{scope}
+    \end{tikzpicture}
+\end{document}
+  
+  %%% Local Variables:
+  %%% mode: latex
+  %%% TeX-master: t
+  %%% End:
+  

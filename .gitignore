@@ -33,3 +33,7 @@ windowsKernel.png
 
 pgf.*
 
+*.nav
+*.snm
+*.vrb
+

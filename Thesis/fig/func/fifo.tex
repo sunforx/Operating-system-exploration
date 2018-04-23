@@ -2,7 +2,7 @@
 \documentclass{standalone}
 \usepackage{xeCJK}
 \usepackage{tikz}
-\usetikzlibrary{shapes.geometric, arrows.meta}
+\usetikzlibrary{shapes.geometric, arrows.meta, arrows,positioning}
 
 \begin{document}
 
@@ -15,16 +15,19 @@
 
   \matrix [column sep=5mm,row sep=7mm]
   {
-  \node [block] (start) {start}; & \\
-  \node [block] (init) {fifo32\_init()}; & \\
-  \node [block] (put) {ififo32\_put()}; & \\
-  \node [block] (status)   {fifo32\_status()}; & \\
-  \node [block] (get) {fifo32\_get()}; & \\
+
+  \node [block] (start) {start}; & 
+  \node [block] (init) {fifo32\_init()}; & 
+  \node [block] (put) {ififo32\_put()}; & 
+  \node [block] (status)   {fifo32\_status()}; & 
+  \node [block] (get) {fifo32\_get()}; \\
+  \node [block] (program) [xshift=0cm]  {program}; \\
   };
   \begin{scope}[every path/.style=line]
   \path (start) -- (init);
   \path (init) -- (put);
   \path (put) -- (status);
+  \path (program) -| node[below]{取数据} (status);
   \path (status) -- (get);
   \end{scope}
   \end{tikzpicture}
