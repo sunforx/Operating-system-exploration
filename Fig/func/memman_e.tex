@@ -1,0 +1,30 @@
+\input{../printable}
+  
+\begin{document}
+\begin{tikzpicture}
+
+  \matrix [column sep=5mm,row sep=7mm]
+  {
+    \node [block] (start) {start}; \\
+    \node [block](test){memtest()}; \\
+    \node [block](init){memman\_init()}; \\
+    \node [block](free){memman\_free()}; \\
+    \node [block](alloc4k){memman\_alloc\_4k()}; & 
+    \node [block](alloc){memman\_alloc()}; \\
+  };
+  \begin{scope}[every path/.style=line]
+    \path (start) -- (test);
+    \path (test) -- node[left]{检测内存并返回可用内存容量}(init);
+    \path (init) -- node[left]{对内存分组并初始化管理信息}(free);
+    \path (free) -- node[left]{初始释放所有内存空间}(alloc4k);
+    \path (alloc4k) -- (alloc);
+    \path (alloc) |- node[above]{程序结束释放内存空间}(free);
+  \end{scope}
+\end{tikzpicture}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
