@@ -36,4 +36,6 @@ pgf.*
 *.nav
 *.snm
 *.vrb
+*.out
+*.toc
 

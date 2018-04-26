@@ -22,17 +22,17 @@
 
 \csingle|void memman_init(struct MEMMAN *man);|
 \begin{itemize}
-  \item 初始化各内存块，并对初始化块信息；
+  \item 初始化各内存块，并初始化块信息；
 \end{itemize}
 
-\csingle|int fifo32_status(struct FIFO32 *fifo);|
+\csingle|int memman_free(struct MEMMAN *man, unsigned int addr, unsigned int size);|
 \begin{itemize}
-  \item 传入等待释放的内存的起始地址和容量，释放对应的内存空间；
+  \item 释放指定大小的内存地址空间；
 \end{itemize}
 
 \csingle|unsigned int memman_alloc_4k(struct MEMMAN *man, unsigned int size);|
 \begin{itemize}
-  \item 报告已经存储了多少数据；\\
+  \item 分配指定大小的内存空间；\\
 \end{itemize}
 
 内存的结构通常用地址和空间表示，在计算机运行过程中，
@@ -109,9 +109,9 @@
 \newpage
 前端空闲：
 
-当相连前端有可用内存时将可释放内存大小归入前端可用内存内，frees不变;
+当相连前端有可用内存时，将可释放内存大小归入前端可用内存内，frees不变;
 
-当相连后端也有可用内存时将后端内存大小归入前端可用内存内，frees减一。
+当相连后端也有可用内存时，将后端内存大小归入前端可用内存内，frees减一。
 
 内存释放前后情况如图~\ref{fig:mem0}和图~\ref{fig:mem1}所示，实现见附录程序~\ref{lst:mem1}: 
 

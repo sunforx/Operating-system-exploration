@@ -1,15 +1,7 @@
-\documentclass{standalone}
-    \usepackage{xeCJK}
-    \usepackage{tikz}
-    \usetikzlibrary{shapes.geometric, arrows.meta, arrows,positioning}
+\input{../printable}
     
-  \begin{document}
+\begin{document}
   \begin{tikzpicture}
-    [auto,
-    block/.style={rectangle, draw=black, thick,
-    text width=10em,align=center, rounded corners,
-    minimum height=4em},
-    line/.style={draw, thick, shorten >=2pt, ->}]
   
     \matrix [column sep=5mm,row sep=7mm]
     {
@@ -19,13 +11,11 @@
         \node [block] (eab_ms)[xshift=1cm]{enable\_mouse()}; \\
 
         \node [block] (fifo32_status) [xshift=-4cm]{fifo32\_status()}; & 
-        % \node [block] (program) [left=of fifo32_status]{program}; & 
         \node [block] (fifo32_get) [xshift=1cm]{fifo32\_get()}; \\
     };
     \begin{scope}[every path/.style=line]
         \path (start) -- (init_kbd);
         \path (start) -- (eab_ms);
-        % \path (program) -- (fifo32_status);
         \path (fifo32_status) -- (fifo32_get);
         \path (init_kbd) -- (fifo32_get);
         \path (eab_ms) -- (fifo32_get);
