@@ -1,6 +1,8 @@
-\documentclass{swfcthesis}
+\documentclass{swfcthesis1}
 
 \addbibresource{bb.bib}
+
+\usepackage{mwe}
 
 \begin{document}
 
@@ -21,7 +23,7 @@
   应该拨开操作系统华丽的外衣，从底层开始，经过一步步的摸索，不断探索并实现各项功能，
   从最简洁的代码完成一个满足现代各项需求的操作系统。
   }
-\Keywords{操作系统\ 设计\ 原理\ 简化}
+\Keywords{操作系统，设计，原理，简化}
 \Acknowledgments{
   四年时光匆匆而过，解了不多不少的惑。一初听说最怕的人，成了感谢最多的人。
 
@@ -51,7 +53,7 @@
   after a step-by-step exploration, we constantly explored and implemented various functions, 
   completing an operating system that satisfies modern requirements from the most concise code.
   }
-\enKeywords{OperatingSystem\ Design\ Principle\ simplify}
+\enKeywords{Operating System, Design, Principle, simplify}
 
 %%% 下面六行不要动！
 \makepreliminarypages% 封面
@@ -70,7 +72,12 @@
 % 启动 v
 \include{chapters/boot}
 % 内核 
-\include{chapters/kernel}
+% \input{chapters/kernel}
+\chapter{编写操作系统内核}
+  \input{kernel/boot}
+  \include{kernel/mem}
+  \input{kernel/io}
+  \input{kernel/mul}
 % 兼容 缺
 \include{chapters/compatible}
 

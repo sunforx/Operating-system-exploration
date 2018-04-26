@@ -1,53 +1,35 @@
 \chapter{文件清单}
 
 \section{根目录}
-app\_make.txt
-apps/
-demos/
-fonts/
-includes/
-kernel/
-libs/
-media/
-ruls/
+\begin{description}
+    \item[includes/] 调用的C函数库
+    \item[kernel/] 系统kernel目录
+    \item[apps/] 系统调用演示程序
+    \item[demos/] 系统测试程序
+\end{description}
+
 \section{Kernel目录}
-asmhead.nas                                                                                                                                        
-bootpack.c                                                                                                                                         
-bootpack.h                                                                                                                                           
-console.c                                                                                                                                          
-dsctbl.c                                                                                                                                           
-fifo.c                                                                                                                                             
-file.c                                                                                                                                             
-graphic.c                                                                                                                                          
-hankaku.txt                                                                                                                                        
-int.c                                                                                                                                              
-ipl09.nas                                                                                                                                          
-keyboard.c                                                                                                                                           
-Makefile                                                                                                                                           
-memory.c                                                                                                                                           
-mouse.c                                                                                                                                            
-mtask.c                                                                                                                                            
-naskfunc.nas                                                                                                                                       
-sheet.c                                                                                                                                            
-tek.c                                                                                                                                              
-timer.c                                                                                                                                            
-window.c
+\begin{description}
+    \item[asmhead.nas]                                                                                                                                        
+    \item[bootpack.c] 主程序                                                                                                                                      
+    \item[bootpack.h] 头文件                                                                                                                                           
+    \item[dsctbl.c] GDT,IDT控制程序                                                                                                                                          
+    \item[fifo.c] 缓冲区                                                                                                                           
+    \item[file.c] 文件管理                                                                                                                                            
+    \item[graphic.c] 图像显示及控制                                                                                                                                     
+    \item[int.c] 中断                                                                                                                                             
+    \item[ipl09.nas] 启动程序IPL                                                                                                                                         
+    \item[keyboard.c] 键盘控制                                                                                                                                       
+    \item[memory.c] 内存管理                                                                                                                                          
+    \item[mouse.c] 鼠标控制                                                                                                                                           
+    \item[mtask.c] 多程序控制                                                                                                                                           
+    \item[naskfunc.nas] 汇编函数库                                                                                                                                      
+    \item[sheet.c] 图层控制                                                                                                                                           
+    \item[timer.c] 定时器                                                                                                                                           
+    \item[window.c] 窗口控制
+\end{description}
 
-\section{includes目录}
-apilib.h
-errno.h
-float.h
-golibc.lib
-harilibc.lib
-limits.h
-math.h
-setjmp.h
-stdarg.h
-stddef.h
-stdio.h
-string.h
 
-\chapter{函数功能} 
 
 
 

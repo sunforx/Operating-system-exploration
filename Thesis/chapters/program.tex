@@ -1,7 +1,8 @@
 \chapter{主要程序代码} %附录二
 
 \section{初始启动程序代码（ipl09.nas）节选}
-\label{sec:ipl09.nas}
+\label{sec:ipl09}
+
 \begin{listing}[H]
   \inputminted[tabsize=2, firstline=12, lastline=29,
   linenos=true]{nasm}{../ZOS/src/kernel/ipl09.nas}
@@ -60,6 +61,7 @@
   \label{lst:mem3}
 \end{listing}
 
+\section{输入输出}
 \begin{listing}[H]
   \inputminted[tabsize=2, firstline=151, lastline=151,
   linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
@@ -79,12 +81,17 @@
   linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
   \inputminted[tabsize=2, firstline=216, lastline=216,
   linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
+  \caption{键盘输入\_1}
+  \label{lst:kbd1}
+\end{listing}
+
+\begin{listing}[H]
   \inputminted[tabsize=2, firstline=227, lastline=227,
   linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
   \inputminted[tabsize=2, firstline=237, lastline=243,
   linenos=true]{c}{../ZOS/src/kernel/bootpack.c}
-  \caption{键盘输入}
-  \label{lst:kbd}
+  \caption{键盘输入\_2}
+  \label{lst:kbd2}
 \end{listing}
 
 \begin{listing}[H]
@@ -94,6 +101,7 @@
   \label{lst:ms}
 \end{listing}
 
+\section{多任务切换}
 \begin{listing}[H]
   \inputminted[tabsize=2, firstline=185, lastline=203,
   linenos=true]{c}{../ZOS/src/kernel/mtask.c}
