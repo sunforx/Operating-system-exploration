@@ -8,7 +8,7 @@
 \begin{enumerate}
 \item 在BIOS完成POST（硬件自检，Power-On Self Test）
   并根据启动顺序（Boot Sequence）来选择启动设备。本系统是从U盘启动。
-\item 计算机读取该设备的MBR（Master boot record，位于第一个扇区，即最前面的512个字节，见图~\ref{fig:mbr}），
+\item 计算机读取该设备的MBR（Master boot record，位于第一个扇区，即最前面的512个字节，如图~\ref{fig:mbr}所示），
   并运行其中的启动程序IPL（Initial Program Loader），将ZOS加载入内存。
   本部分的实现代码，参见附录程序~\ref{sec:ipl09}。
 \item 控制权转交给操作系统后，Kernel开始运行，操作系统启动完成。
@@ -16,9 +16,9 @@
 
 \subsection{制作MBR}
 
-MBR的主要部分是Bootstrap code area，即前446个字节。MBR结构见图~\ref{fig:mbr}。
+MBR的主要部分是Bootstrap code area，即前446个字节。MBR结构如图~\ref{fig:mbr}所示。
 负责指出操作系统的位置，主分区第一个扇区的物理位置（柱面、磁头、扇区号等等）
-，参见附录程序\ref{sec:fat12}。
+，实现如附录程序\ref{sec:fat12}所示。
 
 \begin{figure}[H]
   \centering
@@ -28,7 +28,7 @@ MBR的主要部分是Bootstrap code area，即前446个字节。MBR结构见图~
 \end{figure}
 
 一个扇区大小为512字节，MBR位于C0-H0-S1（柱面0,磁头0,扇区1），\cite{刘伟2010数据恢复技术深度揭秘}
-从下一个扇区(扇区2，C0-H0-S2)开始加载操作系统。找到扇区2的操作如程序~\ref{lst:chs}所示。
+从下一个扇区(扇区2，C0-H0-S2)开始加载操作系统。找到扇区2的代码参见程序~\ref{lst:chs}。
 
 \begin{listing}[H]
   \begin{codeblock}[.5]
@@ -50,7 +50,7 @@ MBR的主要部分是Bootstrap code area，即前446个字节。MBR结构见图~
 \item 磁头1，柱面79，读取1-18扇区 (C79-H1-S1)-(C79-H1-S18)
 \end{enumerate}
 
-按以上策略将磁盘内容读入内存，核心代码如附录程序~\ref{sec:readfrag}。
+按以上策略将磁盘内容读入内存，核心代码参见附录程序~\ref{sec:readfrag}。
 
 readfast 位于代码第76行，JMP readfast 在此代表循环执行。
 当循环执行完毕，表示磁盘内容已经全部加载到内存中，
@@ -59,7 +59,7 @@ MBR过程成功，开始启动操作系统。
 \subsection{制作空白操作系统}
 
 为测试操作系统是否成功被MBR启动，设计将操作系统设置为启动后待机。
-如程序~\ref{lst:blankos}所示。按下电源键，经过启动步骤系统循环执行
+本部分的实现代码，参见程序~\ref{lst:blankos}。按下电源键，经过启动步骤系统循环执行
 HLT\footnote{HLT: 让CPU停止动作并进入待机状态\cite{30_osKawaiHidemi200630}}
 使得操作系统计算机始终处于待机状态，启动成功。
 
@@ -92,7 +92,7 @@ HLT\footnote{HLT: 让CPU停止动作并进入待机状态\cite{30_osKawaiHidemi2
   \item[初始化] 初始化过程主要涉及到：\\
   内存的损坏检测，数据情况，系统数据写入；\\
   输入设备中键盘及鼠标的启用等；
-  \item[内存管理] 内存管理包括内存的分配和释放；
-  \item[输入输出] 输入输出包括键盘输入，鼠标输入，标准输出；
-  \item[多道程序] 多道程序中设计多道程序设计，分时系统，程序切换及程序的优先级设置。
+  \item[内存管理] 包括内存的分配和释放；
+  \item[输入输出] 包括对键盘和鼠标输入的处理，以及标准输出；
+  \item[多道程序] 包括多道程序设计，分时系统，程序切换及程序的优先级设置。
 \end{description}

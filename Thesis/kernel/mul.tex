@@ -42,7 +42,7 @@
 管理定时器主要是使用PIT\footnote{PIT连接IRQ0，设定PIT就可以设定IRQ0的中断间隔，中断频率=单位时间事钟周期书（主频）/设定的数值}
 （Programmable Interval Timer），之前说到定时器时间太短不利于分时的实现，故暂定1秒中发生100次中断。
 
-在实际的运用中，往往需要用到不止一个定时器，于是需要对多个定时器进行管理，数据结构图~\ref{lst:multi_timer}所示。
+在实际的运用中，往往需要用到不止一个定时器，于是需要对多个定时器进行管理，数据结构如图~\ref{lst:multi_timer}所示。
 
 \begin{listing}[H]
   \inputminted[tabsize=2, firstline=175, lastline=187,
@@ -76,7 +76,7 @@
 \item CPU执行任务B
 \item CPU切换到任务A并把所有寄存器中的值从内存中读出来，继续执行任务A
 \end{enumerate}
-流程见图~\ref{fig:tasksw}。
+流程如图~\ref{fig:tasksw}所示。
 \begin{figure}[H]
   \centering
   \includegraphics[width=.7\textwidth]{../Fig/func/multi.pdf}
@@ -84,7 +84,7 @@
   \label{fig:tasksw}
 \end{figure}
 
-为了实现复杂的任务管理，需要用到的数据结构如程序~\ref{lst:multi_task}。
+为了实现复杂的任务管理，需要用到的数据结构代码参见程序~\ref{lst:multi_task}。
 \begin{listing}[H]
   \inputminted[tabsize=2, firstline=227, lastline=232,
     linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
@@ -112,7 +112,7 @@
 \end{listing}
 
 设计将任务分为多个层次，将音乐、网络传输等对优先级要求高的任务放在最高的优先级，
-将鼠标等任务放在稍低的优先级，将对优先级要求低的任务放在较低的优先级，如附录程序~\ref{lst:task_level}所示。
+将鼠标等任务放在稍低的优先级，将对优先级要求低的任务放在较低的优先级，代码参见附录程序~\ref{lst:task_level}。
 
 则系统在多任务同时运行的情况下会优先处理高优先级的任务，处理完成后处理稍低的优先级任务，
 优先级较低的任务将在系统较空闲（即无更高优先级任务）的时候处理。
