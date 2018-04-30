@@ -113,20 +113,20 @@
 
 \subsubsection{前端空闲}
 
-当相连前端有可用内存时，将可释放内存大小归入前端可用内存内，frees不变;
+释放内存时，当待释放空间的相连前端有可用内存时，将可释放内存大小归入前端可用内存内，frees不变;
 
 当相连后端也有可用内存时，将后端内存大小归入前端可用内存内，frees减一。
 
 内存释放前后情况如图~\ref{fig:mem0}和图~\ref{fig:mem1}所示，实现参见附录程序~\ref{lst:mem1}所示。
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=.7\textwidth]{../Fig/mem0.pdf}
   \caption{前端空闲}
   \label{fig:mem0}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=.7\textwidth]{../Fig/mem1.pdf}
   \caption{前端可用，且后端空闲}
@@ -137,11 +137,11 @@
 
 \subsubsection{后端空闲}
 
-当相连后端有可用内存的时候将free[i]的地址换为待释放内存的地址，相连后端内存大小归入待释放内存大小，frees不变。
+释放内存时，当待释放空间的当相连后端有可用内存的时候将free[i]的地址换为待释放内存的地址，相连后端内存大小归入待释放内存大小，frees不变。
 
 内存释放前后情况如图~\ref{fig:mem2}所示，实现参见附录程序~\ref{lst:mem2}所示。
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=.7\textwidth]{../Fig/mem2.pdf}
   \caption{后端空闲}
@@ -156,12 +156,12 @@
 使空闲空间计数最大值加一，free[i]后续空闲内存序号加一，并将释放空间组号定为i。
 
 内存释放前后情况如图~\ref{fig:mem3}所示，代码参见附录程序~\ref{lst:mem3}。
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[width=.7\textwidth]{../Fig/mem3.pdf}
   \caption{前端后端均被占用}
   \label{fig:mem3}
 \end{figure}
 
-\subsubsection{小结}
-经过合理的内存释放，计算机在使用一段时间后，内存中仍然保留着一部分大的空闲内存空间。
+% \subsubsection{小结}
+% 经过合理的内存释放，计算机在使用一段时间后，内存中仍然保留着一部分大的空闲内存空间。

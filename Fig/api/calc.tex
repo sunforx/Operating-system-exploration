@@ -1,0 +1,38 @@
+\input{../printable}
+    
+    \begin{document}
+    
+    \begin{tikzpicture}
+      [auto,
+      block/.style={rectangle, draw=black, thick,
+      text width=8em,align=center, rounded corners,
+      minimum height=4em},
+      line/.style={draw, thick, shorten >=2pt, ->}]
+    
+      \matrix [column sep=5mm,row sep=7mm]
+      {
+    
+      \node [block] (start) {start}; & 
+      \node [block] (cmd) {api\_cmdline()}; &
+      \node [block] (init) {fifo32\_init()}; & 
+      \node [block] (put) {ififo32\_put()}; & 
+      \node [block] (status)   {fifo32\_status()}; & 
+      \node [block] (get) {fifo32\_get()}; \\
+      \node [block] (program) [xshift=0cm]  {program}; \\
+      };
+      \begin{scope}[every path/.style=line]
+      \path (start) -- (init);
+      \path (init) -- (put);
+      \path (put) -- (status);
+      \path (program) -| node[below]{取数据} (status);
+      \path (status) -- (get);
+      \end{scope}
+      \end{tikzpicture}
+    
+    \end{document}
+    
+    %%% Local Variables:
+    %%% mode: latex
+    %%% TeX-master: t
+    %%% End:
+    
