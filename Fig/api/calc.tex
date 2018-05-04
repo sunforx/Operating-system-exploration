@@ -7,19 +7,14 @@
     \matrix [column sep=5mm,row sep=7mm] {
       \node [block] (start) {start}; & 
       \node [block] (cmd) {api\_cmdline()}; &
-      \node [block] (init) {fifo32\_init()}; & 
-      \node [block] (put) {ififo32\_put()}; & 
-      \node [block] (status)   {fifo32\_status()}; & 
-      \node [block] (get) {fifo32\_get()}; \\
-      \node [block] (program) [xshift=0cm]  {program}; \\
+      \node [block] (getnum) {getnum()}; & 
+      \node [block] (put) {api\_putstr0()}; & 
+      \node [block] (end) {api\_end}; \\
     };
 
     \begin{scope}[every path/.style=line]
-      \path (start) -- (init);
-      \path (init) -- (put);
-      \path (put) -- (status);
-      \path (program) -| node[below]{取数据} (status);
-      \path (status) -- (get);
+      \foreach \from/\to in {start/cmd, cmd/getnum, getnum/put, put/end}
+        \path (\from) -- (\to);
     \end{scope}
 
   \end{tikzpicture}

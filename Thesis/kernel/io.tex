@@ -29,7 +29,7 @@ CPU通过PIC\footnote{PIC通过中断控制请求使用CPU，即在需要的时�
 
 \csingle|int fifo32_put(struct FIFO32 *fifo, int data);|
 \begin{itemize}
-  \item 向FIFO写入数据并累积起来，及入栈一次；
+  \item 向FIFO写入数据并累积起来，即入栈一次；
 \end{itemize}
 
 \csingle|int fifo32_get(struct FIFO32 *fifo);|

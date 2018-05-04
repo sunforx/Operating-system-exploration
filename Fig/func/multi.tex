@@ -6,17 +6,16 @@
       \matrix [column sep=5mm,row sep=7mm]
       {
         \node [block] (start) {start}; \\
-        \node [block_left] (init) { \\
-          task\_init() \\
+        \node [block_left] (init) { task initial： \\
           \hh memman\_alloc\_4k() \\
           \hh task\_alloc() \\
           \hh task\_add() \\
           \hh task\_switchsub() \\
           \hh timer\_alloc() \\
+          \hh time\_settime() \\
         };  \\
         \node [block] (run) {task\_run()}; \\
         \node [block] (sleep)[below=of run] {task\_sleep()}; 
-        % \node [block] (add) [left=of sleep]{task\_add()}; 
         \node [block] (switch) [right=of sleep]{task\_switch()}; \\
       };
       \begin{scope}[every path/.style=line]

@@ -3,27 +3,35 @@
 \begin{document}
 
 \begin{tikzpicture}
-    [auto,
-  block_left/.style={rectangle, draw=black, thick, fill=white,
-  text width=10em, text ragged, minimum height=4em, inner sep=6pt}]
+	[auto,
+	block_left/.style={rectangle, draw=black, thick, fill=white,
+	text width=8em, text ragged, minimum height=4em, inner sep=6pt}]
 
-    \matrix [column sep=5mm,row sep=7mm]
-    {
-    \node [block] (start) {start}; &
-    \node [block] (cmd) {api\_cmdline()}; &
-    \node [block_left] (file) { file：\\
-        \hh api\_fopen() \\
-        \hh api\_fsize() \\
-        \hh api\_fread() \\
-        \hh api\_fclose() \\
-        }; &
-    \node [block] (tview) {textview()}; \\
-    };
-    \begin{scope}[every path/.style=line]
-    \foreach \from/\to in {start/cmd, cmd/file, file/tview}
-        \path (\from) -- (\to);
-    \end{scope}
-    \end{tikzpicture}
+	\matrix [column sep=5mm,row sep=7mm]
+	{
+		\node [block] (start) {start}; 
+		\node [block] (cmd) [right=of start] {api\_cmdline()}; 
+		\node [block_left] (file) [right=of cmd] { file：\\
+			\hh api\_fopen() \\
+			\hh api\_fsize() \\
+			\hh api\_fread() \\
+			\hh api\_fclose() \\
+		}; 
+		\node [block] (infobmp) [below=of file] {info\_BMP()}; 
+        \node [block] (infojpeg) [below=of infobmp] {info\_JPEG()}; 
+        \node [block] (dcdbmp) [left=of infobmp] {decode0\_BMP()}; 
+        \node [block] (dcdjpeg) [left=of infojpeg] {decode0\_JPEG()}; 
+        \node [block] (rgb2pal) [left=of dcdbmp] {rgb2pal()}; \\
+	};
+	\begin{scope}[every path/.style=line]
+		\foreach \from/\to in {start/cmd, cmd/file, file/infobmp}
+		\path (\from) -- (\to);
+		\foreach \from/\to in {infobmp/dcdbmp, dcdbmp/rgb2pal}
+		\path (\from) -- (\to);
+		\foreach \from/\to in {infobmp/infojpeg, infojpeg/dcdjpeg, dcdjpeg/rgb2pal}
+		\path (\from) -- (\to);
+	\end{scope}
+\end{tikzpicture}
 
 \end{document}
 

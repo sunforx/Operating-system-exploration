@@ -20,9 +20,10 @@
     \node [block] (tview) {textview()}; \\
     };
     \begin{scope}[every path/.style=line]
-    \foreach \from/\to in {start/cmd, cmd/file, file/tview}
-        \path (\from) -- (\to);
+        \foreach \from/\to in {start/cmd, cmd/file, file/tview}
+            \path (\from) -- (\to);
     \end{scope}
+    
     \end{tikzpicture}
 
 \end{document}

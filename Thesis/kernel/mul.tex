@@ -30,9 +30,9 @@
 “不能明显感觉到的时间间隔内切换”中有两个概念，时间间隔和切换：
 
 \begin{enumerate}
-\item 时间间隔太长则用户会有明显的卡顿感，不利于分时概念的实现，
-  而时间间隔太短则时间不足以让程序响应并完成一定量的工作，同样不利于分时概念的实现。
-\item 切换涉及到保存当前程序的运行状态以便于程序获得CPU时间后可以接续上次的任务继续执行。
+	\item 时间间隔太长则用户会有明显的卡顿感，不利于分时概念的实现，
+	      而时间间隔太短则时间不足以让程序响应并完成一定量的工作，同样不利于分时概念的实现。
+	\item 切换涉及到保存当前程序的运行状态以便于程序获得CPU时间后可以接续上次的任务继续执行。
 \end{enumerate}
 
 \subsection{定时器}
@@ -45,18 +45,18 @@
 在实际的运用中，往往需要用到不止一个定时器，于是需要对多个定时器进行管理，数据结构如图~\ref{lst:multi_timer}所示。
 
 \begin{listing}[H]
-  \inputminted[tabsize=2, firstline=175, lastline=187,
-    linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
-  \caption{数据结构-多定时器}
-  \label{lst:multi_timer}
+	\inputminted[tabsize=2, firstline=175, lastline=187,
+		linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
+	\caption{数据结构-多定时器}
+	\label{lst:multi_timer}
 \end{listing}
 
 \begin{description}
-\item[Timer *next:]下一个定时器地址;
-\item[timeout:]下一个超时时刻;
-\item[flags, flags2:]各个定时器的状态，在应用程序结束时定时器是否取消的标记
-\item[count, next:]当前时刻，下一个时刻;
-\item[Timer *t0:]所有时刻都要减去这个值。
+	\item[Timer *next:]下一个定时器地址;
+	\item[timeout:]下一个超时时刻;
+	\item[flags, flags2:]各个定时器的状态，在应用程序结束时定时器是否取消的标记
+	\item[count, next:]当前时刻，下一个时刻;
+	\item[Timer *t0:]所有时刻都要减去这个值。
 \end{description}
 
 对每个定时任务设置到超时时刻（对每个任务的运行时间进行计量，超过指定时刻向系统发送指令），
@@ -71,30 +71,75 @@
 
 如现有A和B两个任务，A正在运行，现在需要切换到B。
 \begin{enumerate}
-\item 任务B向CPU发送切换任务的指令
-\item CPU把当前寄存器中的值全部写到内存中
-\item CPU执行任务B
-\item CPU切换到任务A并把所有寄存器中的值从内存中读出来，继续执行任务A
+	\item 任务B向CPU发送切换任务的指令
+	\item CPU把当前寄存器中的值全部写到内存中
+	\item CPU执行任务B
+	\item CPU切换到任务A并把所有寄存器中的值从内存中读出来，继续执行任务A
 \end{enumerate}
 流程如图~\ref{fig:tasksw}所示。
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=.7\textwidth]{../Fig/func/multi.pdf}
-  \caption{任务切换}
-  \label{fig:tasksw}
+	\centering
+	\includegraphics[width=.7\textwidth]{../Fig/func/multi.pdf}
+	\caption{任务切换}
+	\label{fig:tasksw}
 \end{figure}
+\newpage
+\csingle|task_alloc(void);|
+\begin{itemize}
+	\item 分配任务所需寄存器并赋初值
+\end{itemize}
 
-为了实现复杂的任务管理，需要用到的数据结构代码参见程序~\ref{lst:multi_task}。
+\csingle|task_add(struct TASK *task)|
+\begin{itemize}
+	\item 添加任务到队列
+\end{itemize}
+
+\csingle|task_switchsub(void)|
+\begin{itemize}
+	\item 寻找最上层的LEVEL并运行处于这一层的任务
+\end{itemize}
+
+\csingle|task_run(struct TASK *task, int level, int priority)|
+\begin{itemize}
+	\item 取得任务相关属性并开始运行任务
+\end{itemize}
+
+\csingle|task_sleep(struct TASK *task)|
+\begin{itemize}
+	\item 任务休眠
+\end{itemize}
+
+\csingle|task_switch(void)|
+\begin{itemize}
+	\item 任务得到时间片，恢复程序现场继续运行
+\end{itemize}
+
+为了实现复杂的任务管理，需要用到的数据结构代码参见程序~\ref{lst:multi_task}和程序~\ref{lst:task}。
 \begin{listing}[H]
-  \inputminted[tabsize=2, firstline=227, lastline=232,
-    linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
-  \inputminted[tabsize=2, firstline=222, lastline=226,
-    linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
-  \inputminted[tabsize=2, firstline=209, lastline=221,
-    linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
-  \caption{数据结构-多任务}
-  \label{lst:multi_task}
+	\inputminted[tabsize=2, firstline=227, lastline=232,
+		linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
+	\caption{数据结构-多任务管理}
+	\label{lst:multi_task}
 \end{listing}
+
+\begin{description}
+	\item[now\_lv:]标志的哪个level里的任务正在执行;
+	\item[lv\_change:]在下次任务切换时是否需要改变LEVEL的标志。
+\end{description}
+
+\begin{listing}[H]
+	\inputminted[tabsize=2, firstline=209, lastline=221,
+		linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
+	\caption{数据结构-任务属性}
+	\label{lst:task}
+\end{listing}
+
+\begin{description}
+	\item[sel:] 存放GDT的编号;
+  	\item[level:] 任务所在优先级层;
+ 	\item[priority:] 任务优先级;
+	\item[TSS32:] 任务寄存器。
+\end{description}
 
 \subsection{任务优先级}
 
@@ -105,10 +150,10 @@
 而通常人为操作中键盘优先级应该是最高的，为此设计任务的优先级。
 
 \begin{listing}[H]
-  \inputminted[tabsize=2, firstline=222, lastline=226,
-    linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
-  \caption{数据结构-任务优先级}
-  \label{lst:task_level}
+	\inputminted[tabsize=2, firstline=222, lastline=226,
+		linenos=true]{c}{../ZOS/src/kernel/bootpack.h}
+	\caption{数据结构-任务优先级}
+	\label{lst:task_level}
 \end{listing}
 
 设计将任务分为多个层次，将音乐、网络传输等对优先级要求高的任务放在最高的优先级，
