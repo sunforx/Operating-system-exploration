@@ -1,6 +1,5 @@
 swfcthesis.cls
 tutorial.pdf
-printable.tex
 
 btss.tex
 test*.*
@@ -28,8 +27,6 @@ thesis.*
 mem*.*
 !mem*.pdf
 !mem*.tex
-
-windowsKernel.png
 
 pgf.*
 
