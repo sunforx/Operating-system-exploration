@@ -1,15 +1,4 @@
-swfcthesis.cls
-tutorial.pdf
-
-btss.tex
-test*.*
-
-mem*h*
-
 # sample
-Makefile
-bf-example.*
-bytefield.pdf
 
 _minted-thesis/
 
@@ -19,16 +8,6 @@ _minted-thesis/
 *.synctex.gz
 *.fdb_latexmk
 *.fls
-
-thesis.*
-!thesis.tex
-!thesis.pdf
-
-mem*.*
-!mem*.pdf
-!mem*.tex
-
-pgf.*
 
 *.nav
 *.snm
